@@ -6,9 +6,9 @@ let config = {
 };
 
 if(NODE_ENV === 'production') {
-    config.url.api = 'https://api.node-express-react-redux-zwitter.demo.atulmy.com/'; // Change this URL according to your live server
+    config.url.api = 'https://www.memoapp.net/api/'; // Change this URL according to your live server
 } else {
-    config.url.api = '/'
+    config.url.api = '/api/'
 }
 
 export default config;
