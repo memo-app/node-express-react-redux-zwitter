@@ -37,7 +37,7 @@ export function fetchTweet(tweetId) {
             type: FETCH_TWEET_BEGIN
         });
 
-        return fetch(`${ config.url.api }tweet/${ tweetId }`).then(function(response) {
+        return fetch(`${ config.url.api }tweets/${ tweetId }`).then(function(response) {
             if (response.ok) {
                 response.json().then(function(response) {
                     if(response.success) {
@@ -60,7 +60,7 @@ export function postTweet(tweet) {
     const token = localStorage.getItem('token');
 
     return dispatch => {
-        return fetch(`${ config.url.api }tweet/add`, {
+        return fetch(`${ config.url.api }tweets/add`, {
             method: 'post',
 
             body: JSON.stringify(tweet),

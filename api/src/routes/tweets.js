@@ -14,7 +14,7 @@ let Tweet = require('../models/tweet');
 let tweetRoutes = express.Router();
 
 // Tweets (/tweets)
-tweetRoutes.get('/tweets', authMiddleware, (request, response) => {
+tweetRoutes.get('/', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -32,7 +32,7 @@ tweetRoutes.get('/tweets', authMiddleware, (request, response) => {
 });
 
 // Tweet Add (/tweet/add)
-tweetRoutes.post('/tweet/add', authMiddleware, (request, response) => {
+tweetRoutes.post('/add', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -76,7 +76,7 @@ tweetRoutes.post('/tweet/add', authMiddleware, (request, response) => {
 });
 
 // Single Tweets (/tweet/tweetId)
-tweetRoutes.get('/tweet/:tweetId', authMiddleware, (request, response) => {
+tweetRoutes.get('/:tweetId', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -96,6 +96,27 @@ tweetRoutes.get('/tweet/:tweetId', authMiddleware, (request, response) => {
         response.json(responseData);
     }
 });
+
+// Delete Tweet (/tweet/tweetId)
+tweetRoutes.delete('/:tweetId', authMiddleware, (request, response) => {
+    let responseData = {
+        success: false,
+        data: {},
+        errors: []
+    };
+
+    Tweet.remove({ _id: request.params.tweetId}, error => {
+        if (error) {
+            reponseData.errors.push(error);
+            response.status(400).send(responseData);
+        } else {
+            responseData.success = true;
+            response.send(responseData);
+        }
+    })
+
+    response.status(500);
+})
 
 // Export
 module.exports = tweetRoutes;

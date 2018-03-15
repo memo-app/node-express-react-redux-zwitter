@@ -13,9 +13,9 @@ function TweetList({ tweets }) {
     );
 
     const tweetsList = (
-        tweets.map(({ _id, text, createdAt }) => (
+        tweets.map(({ _id, text, userId, createdAt }) => (
             <Card key={ _id }>
-                <Link to={ `/tweet/${ _id }` }><CardTitle title={ text } subtitle={ moment(createdAt).fromNow() } /></Link>
+                <Link to={ `/tweet/${ _id }` }><CardTitle title={ text } subtitle={ `${moment(createdAt).fromNow()} by ${userId}` } /></Link>
             </Card>
         ))
     );

@@ -4,21 +4,13 @@
 // Imports
 const express = require('express');
 
-let authMiddleware = require('./middlewares/auth');
-
 // Common Routes
-let commonRoutes = express.Router();
+let routes = express.Router();
+const tweets = require('./tweets');
+const users = require('./users');
 
-// Root
-commonRoutes.get('/', authMiddleware, (request, response) => {
-    let responseData = {
-        success: false,
-
-        errors: {}
-    };
-
-    response.json(responseData);
-});
+routes.use('/tweets', tweets);
+routes.use('/users', users);
 
 // Export
-module.exports = commonRoutes;
+module.exports = routes;

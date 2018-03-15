@@ -14,7 +14,7 @@ let User = require('../models/user');
 let userRoutes = express.Router();
 
 // Login
-userRoutes.post('/user/login', authMiddleware, (request, response) => {
+userRoutes.post('/login', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -61,7 +61,7 @@ userRoutes.post('/user/login', authMiddleware, (request, response) => {
 });
 
 // Register
-userRoutes.post('/user/register', (request, response) => {
+userRoutes.post('/register', (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -116,6 +116,15 @@ userRoutes.post('/user/register', (request, response) => {
         response.json(responseData);
     }
 });
+
+// Get username by user id
+userRoutes.get('/:userId', (request, response) => {
+    User.findOne({ _id: request.params.userId }, (error, document) => {
+        if (!document)
+            response.status(404);
+        response.json(document.username);
+    })
+})
 
 // Export
 module.exports = userRoutes;

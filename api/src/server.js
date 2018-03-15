@@ -9,9 +9,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 const config = require('./config');
-let commonRoutes = require('./routes');
-let userRoutes = require('./routes/user');
-let tweetRoutes = require('./routes/tweet');
+let routes = require('./routes');
 
 // Setup
 let apiServer = express();
@@ -33,9 +31,7 @@ apiServer.use(bodyParser.json());
 apiServer.use(cookieParser());
 
 // Routes
-apiServer.use(commonRoutes);
-apiServer.use(userRoutes);
-apiServer.use(tweetRoutes);
+apiServer.use('/api', routes);
 
 // Export
 module.exports = apiServer;

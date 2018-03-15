@@ -8,7 +8,7 @@ export const USER_CURRENT_SET = 'USER_CURRENT_SET';
 
 export function postLogin(credentials) {
     return dispatch => {
-        return fetch(`${ config.url.api }user/login`, {
+        return fetch(`${ config.url.api }users/login`, {
             method: 'post',
 
             body: JSON.stringify(credentials),
@@ -38,7 +38,7 @@ export function postLogin(credentials) {
 
 export function postRegister(credentials) {
     return dispatch => {
-        return fetch(`${ config.url.api }user/register`, {
+        return fetch(`${ config.url.api }users/register`, {
             method: 'post',
 
             body: JSON.stringify(credentials),
