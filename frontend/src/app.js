@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 
 // App Imports
 import Layout from './components/layout'
+import TweetSearchContainer from './components/tweet/search/TweetSearchContainer'
 import TweetListContainer from './components/tweet/list-container';
 import TweetAdd from './components/tweet/add';
 import TweetViewContainer from './components/tweet/view-container';
@@ -16,9 +17,10 @@ const App  = () => (
     <Layout>
         <Switch>
             <Route exact path="/" component={ TweetListContainer } />
+            <Route path="/tweet/search" component={ TweetSearchContainer} />            
             <Route path="/tweet/add" component={ TweetAdd } />
             <Route path="/tweet/:tweetId" component={ TweetViewContainer } />
-            <Route path="/user/login" component={ UserLogin } />
+            <Route path="/user/login" component={ UserLogin } />          
             <Route path="/user/register" component={ UserRegister } />
             <Route path="/about" component={ About } />
             <Route component={ PageNotFound }/>

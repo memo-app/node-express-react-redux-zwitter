@@ -9,7 +9,7 @@ let TweetSchema = mongoose.Schema({
     userId: String,
     createdAt: Date
 });
-
+TweetSchema.index({ text: 'text' }, { default_language: "english" });
 let Tweet = mongoose.model('tweets', TweetSchema);
 
 module.exports = Tweet;
