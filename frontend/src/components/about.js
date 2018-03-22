@@ -7,13 +7,7 @@ class About extends Component {
             <section>
                 <h2>ℹ️ About</h2>
 
-                <br/>
-
-                <p>Github Repo: <a href="https://github.com/atulmy/node-express-react-redux-zwitter" target="_blank">https://github.com/atulmy/node-express-react-redux-zwitter</a></p>
-
-                <br/>
-
-                <p>Twitter: <a href="https://twitter.com/atulmy" target="_blank">https://twitter.com/atulmy</a></p>
+                <p>Github Repo: <a href="https://github.com/memo-app/web-app" target="_blank">https://github.com/memo-app/web-app</a></p>
             </section>
         )
     }

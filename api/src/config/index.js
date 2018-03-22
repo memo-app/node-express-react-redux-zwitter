@@ -4,7 +4,7 @@
 const config = {
     port: 5001,
     secret: 'super-secret-key',
-    databaseUrl: 'mongodb://localhost/zwitter',
+    databaseUrl: 'mongodb://localhost/memoapp',
     saltRounds: 10
 };
 

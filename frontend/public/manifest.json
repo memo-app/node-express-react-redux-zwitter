@@ -1,6 +1,6 @@
 {
-  "short_name": "zwitter",
-  "name": "Zwitter",
+  "short_name": "memoapp",
+  "name": "MemoApp",
   "icons": [
     {
       "src": "zwitter.png",
