@@ -1,5 +1,5 @@
-# 🐣 Node Express/MongoDB + React/Redux App - Zwitter
-A basic clone of Twitter (Boilerplate App) using - Node, Express, MongoDB, React and Redux using **create-react-app** with separate **API** `(express+mongo)` and **Frontend** `(react+redux)` folders. Uses Google's Material Design UI (`material-ui` package).
+# MemoApp
+A basic link sharing platform in Node, Express, MongoDB, React and Redux using **create-react-app** with separate **API** `(express+mongo)` and **Frontend** `(react+redux)` folders. Uses Google's Material Design UI (`material-ui` package).
 
 ## 📝 Features
 - [x] List all memos
@@ -10,7 +10,8 @@ A basic clone of Twitter (Boilerplate App) using - Node, Express, MongoDB, React
 - [x] Progressive Web App features (Offline first, Service worker, Application shell)
 
 ## ▶️ Running
-- Clone repo `git clone git@github.com:atulmy/node-express-react-redux-zwitter.git zwitter`
+- Clone repo
+- Install **nodemon** NPM module globally `npm install -g nodemon`
 - Install NPM modules for **api** `cd api` and `npm install`
 - Install NPM modules for **frontend** `cd frontend` and `npm install`
 - Run **api** server `cd api` and `npm start` (runs on port configured under `api/src/config/index.js`)
@@ -43,35 +44,6 @@ A basic clone of Twitter (Boilerplate App) using - Node, Express, MongoDB, React
 - redux-devtools-extension (Redux DevTools extension)
 - **redux-thunk** (Thunk middleware for Redux)
 
-## 📸 Screenshots
-![screenshot](http://atulmy.com/attachments/images/node-express-react-redux-zwitter.v1.png)
-
-## 🏗 Core Structure
-    zwitter
-      ├── api (api.example.com)
-      │   ├── src
-      │   │   ├── config
-      │   │   ├── models
-      │   │   ├── routes
-      │   │   ├── server.js
-      │   │   └── index.js
-      │   │
-      │   └── package.json
-      │
-      ├── frontend (example.com)
-      │   ├── public
-      │   ├── src
-      │   │   ├── actions
-      │   │   ├── components
-      │   │   ├── reducers
-      │   │   ├── app.js
-      │   │   └── index.js
-      │   │
-      │   └── package.json
-      │
-      ├── .gitignore
-      └── README.md
-
 ## ⭐️ Resources
 - [What is React.js and Why I recommend it to other JavaScript Developers?](https://www.linkedin.com/pulse/what-reactjs-why-i-recommend-other-javascript-sandip-das) (LinkedIn post)
 - [Container Components](https://medium.com/@learnreact/container-components-c0e67432e005) (Medium article)
@@ -84,7 +56,8 @@ A basic clone of Twitter (Boilerplate App) using - Node, Express, MongoDB, React
 - [Collection of bunch of interesting React videos and related topic](https://www.youtube.com/playlist?list=PLkuiMQfg5DujODRnZGKokmwHZrBqqUCr1) (Youtube playlist)
 
 ## 🎩 Author
-Atul Yadav - [GitHub](https://github.com/atulmy) &bull; [Twitter](https://twitter.com/atulmy)
+**Memoari** team @ App Start Contest by eStudent, FER, Zagreb, Croatia.
+Boilerplate by Atul Yadav - [GitHub](https://github.com/atulmy) &bull; [Twitter](https://twitter.com/atulmy)
 
 ## 📜 License
 Copyright (c) 2017 Atul Yadav http://github.com/atulmy
