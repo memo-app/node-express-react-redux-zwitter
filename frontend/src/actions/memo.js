@@ -1,26 +1,26 @@
 // App Imports
 import config from '../config';
 
-export const SET_TWEETS = 'SET_TWEETS';
-export const FETCH_TWEETS_BEGIN = 'FETCH_TWEETS_BEGIN';
-export const SET_TWEET = 'SET_TWEET';
-export const FETCH_TWEET_BEGIN = 'FETCH_TWEET_BEGIN';
-export const REMOVE_TWEET_BEGIN = 'REMOVE_TWEET_BEGIN';
-export const REMOVE_TWEET_SUCCESS = 'REMOVE_TWEET_SUCCESS';
-export const REMOVE_TWEET_FAIL = 'REMOVE_TWEET_FAIL';
+export const SET_MEMOS = 'SET_MEMOS';
+export const FETCH_MEMOS_BEGIN = 'FETCH_MEMOS_BEGIN';
+export const SET_MEMO = 'SET_MEMO';
+export const FETCH_MEMO_BEGIN = 'FETCH_MEMO_BEGIN';
+export const REMOVE_MEMO_BEGIN = 'REMOVE_MEMO_BEGIN';
+export const REMOVE_MEMO_SUCCESS = 'REMOVE_MEMO_SUCCESS';
+export const REMOVE_MEMO_FAIL = 'REMOVE_MEMO_FAIL';
 
-export function fetchTweets() {
+export function fetchMemos() {
     return dispatch => {
         dispatch({
-            type: FETCH_TWEETS_BEGIN
+            type: FETCH_MEMOS_BEGIN
         });
 
-        return fetch(`${ config.url.api }tweets`).then(function(response) {
+        return fetch(`${ config.url.api }memos`).then(function(response) {
             if (response.ok) {
                 response.json().then(function(response) {
                     dispatch({
-                        type: SET_TWEETS,
-                        tweets: response.data
+                        type: SET_MEMOS,
+                        memos: response.data
                     });
                 });
             } else {
@@ -32,19 +32,19 @@ export function fetchTweets() {
     }
 }
 
-export function fetchTweet(tweetId) {
+export function fetchMemo(memoId) {
     return dispatch => {
         dispatch({
-            type: FETCH_TWEET_BEGIN
+            type: FETCH_MEMO_BEGIN
         });
 
-        return fetch(`${ config.url.api }tweets/${ tweetId }`).then(function(response) {
+        return fetch(`${ config.url.api }memos/${ memoId }`).then(function(response) {
             if (response.ok) {
                 response.json().then(function(response) {
                     if(response.success) {
                         dispatch({
-                            type: SET_TWEET,
-                            tweet: response.data
+                            type: SET_MEMO,
+                            memo: response.data
                         });
                     }
                 });
@@ -57,14 +57,14 @@ export function fetchTweet(tweetId) {
     }
 }
 
-export function postTweet(tweet) {
+export function postMemo(memo) {
     const token = localStorage.getItem('token');
 
     return dispatch => {
-        return fetch(`${ config.url.api }tweets/add`, {
+        return fetch(`${ config.url.api }memos/add`, {
             method: 'post',
 
-            body: JSON.stringify(tweet),
+            body: JSON.stringify(memo),
 
             headers: {
                 'Content-Type': 'application/json',
@@ -75,15 +75,15 @@ export function postTweet(tweet) {
     }
 }
 
-export function deleteTweet(tweetId) {
+export function deleteMemo(memoId) {
     const token = localStorage.getItem('token');
 
     return dispatch => {
         dispatch({
-            type: REMOVE_TWEET_BEGIN
+            type: REMOVE_MEMO_BEGIN
         });
         
-        return fetch(`${ config.url.api }tweets/${tweetId}`, {
+        return fetch(`${ config.url.api }memos/${memoId}`, {
             method: 'delete',
 
             headers: {
@@ -95,12 +95,12 @@ export function deleteTweet(tweetId) {
                 response.json().then(function (response) {
                     if (response.success) {
                         dispatch({
-                            type: REMOVE_TWEET_SUCCESS,
-                            tweetId: tweetId
+                            type: REMOVE_MEMO_SUCCESS,
+                            memoId: memoId
                         });
                     } else {
                         dispatch({
-                            type: REMOVE_TWEET_FAIL
+                            type: REMOVE_MEMO_FAIL
                         });
                     }
                 });

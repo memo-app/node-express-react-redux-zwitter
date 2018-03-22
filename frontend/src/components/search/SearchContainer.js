@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // App Imports
-//import { fetchTweets } from '../../actions/tweet';
-import Loading from '../../loading';
-import TweetSearchBox from './TweetSearchBox';
-import TweetSearchResults from './TweetSearchResults';
-import config from '../../../config';
+//import { fetchmemos } from '../../actions/memo';
+import Loading from '../loading';
+import SearchBox from './SearchBox';
+import SearchResults from './SearchResults';
+import config from '../../config';
 
-class TweetSearchContainer extends Component {
+class SearchContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +23,7 @@ class TweetSearchContainer extends Component {
 
     setSearchQuery({ target }) {
         this.setState({ isLoading: true, searchQuery: target.value });
-        return fetch(`${config.url.api}tweets/search?searchTerm=${target.value}`).then(response => {
+        return fetch(`${config.url.api}memos/search?searchTerm=${target.value}`).then(response => {
             if (response.ok) {
                 response.json().then(response => {
                     this.setState({ isLoading: false, results: response.data });
@@ -40,7 +40,7 @@ class TweetSearchContainer extends Component {
 
 
     componentDidMount() {
-        //this.props.fetchTweets();
+        //this.props.fetchMemos();
     }
 
 
@@ -49,10 +49,10 @@ class TweetSearchContainer extends Component {
     render() {
         return (
             <section>
-                <h2>Tweet search</h2>
+                <h2>memo search</h2>
 
-                <TweetSearchBox setSearchQuery={this.setSearchQuery} searchQuery={this.state.searchQuery} />
-                <TweetSearchResults {...this.state} />
+                <SearchBox setSearchQuery={this.setSearchQuery} searchQuery={this.state.searchQuery} />
+                <SearchResults {...this.state} />
 
                 <br />
             </section>
@@ -60,4 +60,4 @@ class TweetSearchContainer extends Component {
     }
 }
 
-export default connect()(TweetSearchContainer);
+export default connect()(SearchContainer);

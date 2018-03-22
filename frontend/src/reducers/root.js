@@ -3,10 +3,10 @@ import { combineReducers } from 'redux';
 
 // App Imports
 import user from './user';
-import { tweets, tweet } from './tweets';
+import { memos, memo } from './memos';
 
 export default combineReducers({
     user,
-    tweets,
-    tweet
+    memos,
+    memo
 });

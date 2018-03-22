@@ -6,10 +6,10 @@ const express = require('express');
 
 // Common Routes
 let routes = express.Router();
-const tweets = require('./tweets');
+const memos = require('./memos');
 const users = require('./users');
 
-routes.use('/tweets', tweets);
+routes.use('/memos', memos);
 routes.use('/users', users);
 
 // Export

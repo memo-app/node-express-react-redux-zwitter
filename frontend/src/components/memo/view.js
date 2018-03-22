@@ -7,18 +7,18 @@ import moment from 'moment';
 import { Card, CardTitle } from 'material-ui/Card';
 
 // App Imports
-import Tweet from './Tweet';
+import Memo from './memo';
 
-function TweetView({ tweet }) {
+function MemoView({ memo }) {
     return (
         <div>
-            <Tweet { ...tweet } />
+            <Memo { ...memo } />
 
             <br/>
 
-            <Link to="/">👈 Back to all tweets</Link>
+            <Link to="/">👈 Back to all memos</Link>
         </div>
     );
 }
 
-export default TweetView;
+export default MemoView;

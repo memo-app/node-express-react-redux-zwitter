@@ -2,12 +2,12 @@
 import update from 'immutability-helper';
 
 // App Imports
-import { SET_TWEETS, FETCH_TWEETS_BEGIN, SET_TWEET, FETCH_TWEET_BEGIN, REMOVE_TWEET_BEGIN, REMOVE_TWEET_SUCCESS, REMOVE_TWEET_FAIL } from '../actions/tweet';
+import { SET_MEMOS, FETCH_MEMOS_BEGIN, SET_MEMO, FETCH_MEMO_BEGIN, REMOVE_MEMO_BEGIN, REMOVE_MEMO_SUCCESS, REMOVE_MEMO_FAIL } from '../actions/memo';
 
-export function tweets(state = { list: [], error: false, loading: false }, action = {}) {
+export function memos(state = { list: [], error: false, loading: false }, action = {}) {
     switch (action.type) {
 
-        case FETCH_TWEETS_BEGIN:
+        case FETCH_MEMOS_BEGIN:
             return update(state, {
                 $merge: {
                     list: [],
@@ -16,17 +16,17 @@ export function tweets(state = { list: [], error: false, loading: false }, actio
                 }
             });
 
-        case SET_TWEETS:
+        case SET_MEMOS:
             return update(state, {
                 $merge: {
-                    list: action.tweets,
+                    list: action.memos,
                     error: false,
                     loading: false
                 }
             });
 
 
-        case REMOVE_TWEET_BEGIN:
+        case REMOVE_MEMO_BEGIN:
             return update(state, {
                 $merge: {
                     error: false,
@@ -34,12 +34,12 @@ export function tweets(state = { list: [], error: false, loading: false }, actio
                 }
             });
 
-        case REMOVE_TWEET_SUCCESS:
+        case REMOVE_MEMO_SUCCESS:
             console.log(state, action);
             return update(state, {
                 $merge: {
                     loading: false,
-                    list: state.list.filter(t => t._id !== action.tweetId)
+                    list: state.list.filter(t => t._id !== action.memoId)
                 }
             });
 
@@ -48,10 +48,10 @@ export function tweets(state = { list: [], error: false, loading: false }, actio
     }
 }
 
-export function tweet(state = { details: {}, error: false, loading: false }, action = {}) {
+export function memo(state = { details: {}, error: false, loading: false }, action = {}) {
     switch (action.type) {
 
-        case FETCH_TWEET_BEGIN:
+        case FETCH_MEMO_BEGIN:
             return update(state, {
                 $merge: {
                     details: {},
@@ -60,16 +60,16 @@ export function tweet(state = { details: {}, error: false, loading: false }, act
                 }
             });
 
-        case SET_TWEET:
+        case SET_MEMO:
             return update(state, {
                 $merge: {
-                    details: action.tweet,
+                    details: action.memo,
                     error: false,
                     loading: false
                 }
             });
 
-        case REMOVE_TWEET_BEGIN:
+        case REMOVE_MEMO_BEGIN:
             return update(state, {
                 $merge: {
                     error: false,
@@ -77,7 +77,7 @@ export function tweet(state = { details: {}, error: false, loading: false }, act
                 }
             })
 
-        case REMOVE_TWEET_SUCCESS:
+        case REMOVE_MEMO_SUCCESS:
             return update(state, {
                 $merge: {
                     details: { deleted: true },

@@ -33,7 +33,7 @@ class UserRegister extends Component {
     onSubmit(event) {
         event.preventDefault();
 
-        console.log('E - submit #form-tweet');
+        console.log('E - submit #form-memo');
 
         let input = {};
         input.username = this.state.username;
@@ -91,7 +91,7 @@ class UserRegister extends Component {
 
                 { this.state.message ? <Card><CardText color={ blue500 }>{ this.state.message }</CardText></Card> : '' }
 
-                <form id="form-tweet" onSubmit={ this.onSubmit.bind(this) }>
+                <form id="form-memo" onSubmit={ this.onSubmit.bind(this) }>
                     <TextField
                         name="username"
                         value={ this.state.username }

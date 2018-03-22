@@ -12,11 +12,11 @@ import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
 
 // App Imports
-import { postTweet } from '../../actions/tweet';
+import { postMemo } from '../../actions/memo';
 import AuthRedirect from './../user/auth-redirect';
 import Loading from '../loading';
 
-class TweetAdd extends Component {
+class MemoAdd extends Component {
     constructor(props) {
         super(props);
 
@@ -25,15 +25,15 @@ class TweetAdd extends Component {
             isLoading: false,
             error: '',
             notification: false,
-            viewTweet: false,
-            tweetId: ''
+            viewMemo: false,
+            memoId: ''
         };
     }
 
     onSubmit(event) {
         event.preventDefault();
 
-        console.log('E - submit #form-tweet');
+        console.log('E - submit #form-memo');
 
         this.setState({ isLoading: true });
 
@@ -41,15 +41,15 @@ class TweetAdd extends Component {
         input.text = this.state.text;
 
         if(input.text !=='') {
-            this.props.postTweet(input).then((response) => {
+            this.props.postMemo(input).then((response) => {
                 if(response.success) {
-                    this.setState({ isLoading: false, notification: true, text: '', error: '', tweetId: response.data.tweetId });
+                    this.setState({ isLoading: false, notification: true, text: '', error: '', memoId: response.data.memoId });
                 } else {
                     this.setState({ isLoading: false, error: response.errors[0].message });
                 }
             });
         } else {
-            this.setState({ isLoading: false, error: 'Tweet cannot be empty.', notification: false });
+            this.setState({ isLoading: false, error: 'memo cannot be empty.', notification: false });
         }
     }
 
@@ -62,7 +62,7 @@ class TweetAdd extends Component {
     render() {
         return (
             <section>
-                <h2>💭 Tweet to the world</h2>
+                <h2>💭 Save a memo</h2>
 
                 <br/>
 
@@ -70,12 +70,12 @@ class TweetAdd extends Component {
 
                 { this.state.message ? <Card><CardText color={ blue500 }>{ this.state.message }</CardText></Card> : '' }
 
-                <form id="form-tweet" onSubmit={ this.onSubmit.bind(this) }>
+                <form id="form-memo" onSubmit={ this.onSubmit.bind(this) }>
                     <TextField
                         name="text"
                         value={ this.state.text }
                         onChange={ this.onChange.bind(this) }
-                        floatingLabelText="What's happening?"
+                        floatingLabelText="Memo content"
                         multiLine={ true }
                         rows={1}
                         fullWidth={ true }
@@ -89,13 +89,13 @@ class TweetAdd extends Component {
 
                 <Snackbar
                     open={ this.state.notification }
-                    message="Tweet has been posted"
+                    message="memo has been posted"
                     autoHideDuration={4000}
-                    action="View Tweet"
-                    onActionClick={ () => ( this.setState({ viewTweet: true }) ) }
+                    action="View memo"
+                    onActionClick={ () => ( this.setState({ viewMemo: true }) ) }
                 />
 
-                { this.state.viewTweet ? <Redirect to={ `/tweet/${ this.state.tweetId }` } /> : '' }
+                { this.state.viewMemo ? <Redirect to={ `/memo/${ this.state.memoId }` } /> : '' }
 
                 <AuthRedirect />
             </section>
@@ -103,8 +103,8 @@ class TweetAdd extends Component {
     }
 }
 
-TweetAdd.propTypes = {
-    postTweet: PropTypes.func.isRequired
+MemoAdd.propTypes = {
+    postMemo: PropTypes.func.isRequired
 };
 
-export default connect(null, { postTweet })(TweetAdd);
+export default connect(null, { postMemo })(MemoAdd);

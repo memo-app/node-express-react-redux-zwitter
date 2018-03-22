@@ -2,9 +2,9 @@
 A basic clone of Twitter (Boilerplate App) using - Node, Express, MongoDB, React and Redux using **create-react-app** with separate **API** `(express+mongo)` and **Frontend** `(react+redux)` folders. Uses Google's Material Design UI (`material-ui` package).
 
 ## 📝 Features
-- [x] List all tweets
-- [x] View single tweet
-- [x] Post a tweet
+- [x] List all memos
+- [x] View single memo
+- [x] Post a memo
 - [x] Login / Register
 - [x] Enable [CORS](https://enable-cors.org/index.html)
 - [x] Progressive Web App features (Offline first, Service worker, Application shell)

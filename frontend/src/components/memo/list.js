@@ -7,18 +7,18 @@ import moment from 'moment';
 // UI Imports
 import Snackbar from 'material-ui/Snackbar';
 
+// App Imports
+import Memo from './memo';
 
-import Tweet from './Tweet';
-
-class TweetList extends Component {
+class MemoList extends Component {
     render() {
         return (
             <div>
-                {!(this.props.tweets instanceof Array) ?
-                    <p>No tweets to show.</p> :
-                    this.props.tweets.map(tweet =>
-                        <Tweet
-                            key={tweet._id} {...tweet}
+                {!(this.props.memos instanceof Array) ?
+                    <p>No memos to show.</p> :
+                    this.props.memos.map(memo =>
+                        <Memo
+                            key={memo._id} {...memo}
                             hideDeleteButton={this.props.hideDeleteButton}
                         />)}
             </div>
@@ -27,8 +27,8 @@ class TweetList extends Component {
 
 }
 
-TweetList.propTypes = {
-    tweets: PropTypes.array.isRequired
+MemoList.propTypes = {
+    memos: PropTypes.array.isRequired
 };
 
-export default TweetList;
+export default MemoList;

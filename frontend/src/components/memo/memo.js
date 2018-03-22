@@ -9,22 +9,22 @@ import { Card, CardTitle, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 // App imports
-import { deleteTweet } from '../../actions/tweet';
+import { deleteMemo } from '../../actions/memo';
 import Loading from '../loading';
 
-class TweetView extends Component {
+class Memo extends Component {
     constructor() {
         super();
         this.delete = this.delete.bind(this);
     }
     delete() {
-        this.props.deleteTweet(this.props._id);
+        this.props.deleteMemo(this.props._id);
     }
     render() {
         return (
             <Card>
                 {this.props.deleted && <Redirect to="/" />}
-                <Link to={`/tweet/${this.props._id}`}><CardTitle title={this.props.text} subtitle={`${moment(this.props.createdAt).fromNow()} by ${this.props.userId}`} /></Link>
+                <Link to={`/memo/${this.props._id}`}><CardTitle title={this.props.text} subtitle={`${moment(this.props.createdAt).fromNow()} by ${this.props.userId}`} /></Link>
                 {!this.props.hideDeleteButton &&
                     <CardActions>
                         <FlatButton label="Delete" secondary onClick={this.delete} />
@@ -35,4 +35,4 @@ class TweetView extends Component {
     }
 }
 
-export default connect(null, { deleteTweet })(TweetView);
+export default connect(null, { deleteMemo })(Memo);

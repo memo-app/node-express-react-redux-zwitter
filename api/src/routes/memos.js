@@ -8,20 +8,20 @@ const isEmpty = require('lodash/isEmpty');
 // App Imports
 const config = require('./../config');
 let authMiddleware = require('./middlewares/auth');
-let Tweet = require('../models/tweet');
+let Memo = require('../models/memo');
 
 // Common Routes
-let tweetRoutes = express.Router();
+let memoRoutes = express.Router();
 
-// Tweets (/tweets)
-tweetRoutes.get('/', authMiddleware, (request, response) => {
+// Memos (/memos)
+memoRoutes.get('/', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
         errors: []
     };
 
-    Tweet.find({}).sort('-createdAt').exec(function (error, documents) {
+    Memo.find({}).sort('-createdAt').exec(function (error, documents) {
         if (documents.length > 0) {
             responseData.data = documents;
             responseData.success = true;
@@ -31,8 +31,8 @@ tweetRoutes.get('/', authMiddleware, (request, response) => {
     });
 });
 
-// Tweet Add (/tweet/add)
-tweetRoutes.post('/add', authMiddleware, (request, response) => {
+// Memo Add (/memo/add)
+memoRoutes.post('/add', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -41,20 +41,20 @@ tweetRoutes.post('/add', authMiddleware, (request, response) => {
 
     if (!isEmpty(request.user)) {
         if (request.body.text != '') {
-            let tweet = {
+            let memo = {
                 text: request.body.text,
                 userId: request.user._id,
                 createdAt: new Date()
             };
 
-            Tweet.create(tweet, (error, document) => {
+            Memo.create(memo, (error, document) => {
                 if (error) {
                     responseData.errors.push({ type: 'critical', message: error });
                 } else {
-                    let tweetId = document._id;
+                    let memoId = document._id;
 
-                    if (tweetId) {
-                        responseData.data.tweetId = tweetId;
+                    if (memoId) {
+                        responseData.data.memoId = memoId;
                         responseData.success = true;
                     } else {
                         responseData.errors.push({ type: 'default', message: 'Please try again.' });
@@ -64,19 +64,19 @@ tweetRoutes.post('/add', authMiddleware, (request, response) => {
                 response.json(responseData);
             });
         } else {
-            responseData.errors.push({ type: 'warning', message: 'Please enter tweet.' });
+            responseData.errors.push({ type: 'warning', message: 'Please enter memo.' });
 
             response.json(responseData);
         }
     } else {
-        responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to post a tweet.' });
+        responseData.errors.push({ type: 'critical', message: 'You are not signed in. Please sign in to post a memo.' });
 
         response.json(responseData);
     }
 });
 
-// Search Tweets (/tweet/search)
-tweetRoutes.get('/search', authMiddleware, (request, response) => {
+// Search Memos (/memo/search)
+memoRoutes.get('/search', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -85,7 +85,7 @@ tweetRoutes.get('/search', authMiddleware, (request, response) => {
 
     if (request.query.searchTerm) {
 
-        Tweet.find({
+        Memo.find({
             $text: {
                 $search: request.query.searchTerm,
                 $language: "english",
@@ -112,16 +112,16 @@ tweetRoutes.get('/search', authMiddleware, (request, response) => {
 });
 
 
-// Single Tweets (/tweet/tweetId)
-tweetRoutes.get('/:tweetId', authMiddleware, (request, response) => {
+// Single Memos (/memo/memoId)
+memoRoutes.get('/:memoId', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
         errors: []
     };
 
-    if (request.params.tweetId) {
-        Tweet.find({ _id: request.params.tweetId }).exec(function (error, documents) {
+    if (request.params.memoId) {
+        Memo.find({ _id: request.params.memoId }).exec(function (error, documents) {
             if (documents && documents.length > 0) {
                 responseData.data = documents[0];
                 responseData.success = true;
@@ -134,15 +134,15 @@ tweetRoutes.get('/:tweetId', authMiddleware, (request, response) => {
     }
 });
 
-// Delete Tweet (/tweet/tweetId)
-tweetRoutes.delete('/:tweetId', authMiddleware, (request, response) => {
+// Delete Memo (/memo/memoId)
+memoRoutes.delete('/:memoId', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
         errors: []
     };
 
-    Tweet.remove({ _id: request.params.tweetId }, error => {
+    Memo.remove({ _id: request.params.memoId }, error => {
         if (error) {
             responseData.errors.push(error.message);
             response.status(400).send(responseData);
@@ -154,4 +154,4 @@ tweetRoutes.delete('/:tweetId', authMiddleware, (request, response) => {
 })
 
 // Export
-module.exports = tweetRoutes;
+module.exports = memoRoutes;
