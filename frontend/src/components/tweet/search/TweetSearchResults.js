@@ -21,8 +21,8 @@ class TweetSearchResults extends Component {
         return (
             <div>
                 <h3> Tweet Search Results </h3>
-                <p>{numResults} results found for term <i>{ this.props.searchQuery}</i> </p>
-                { (numResults > 0) && <TweetList tweets={this.props.results} />}
+                <p>{numResults} results found for term <i>{this.props.searchQuery}</i> </p>
+                {(numResults > 0) && <TweetList tweets={this.props.results} hideDeleteButton={true} />}
             </div>
         );
     }

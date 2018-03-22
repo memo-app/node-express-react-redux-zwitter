@@ -25,9 +25,11 @@ class TweetView extends Component {
             <Card>
                 {this.props.deleted && <Redirect to="/" />}
                 <Link to={`/tweet/${this.props._id}`}><CardTitle title={this.props.text} subtitle={`${moment(this.props.createdAt).fromNow()} by ${this.props.userId}`} /></Link>
-                <CardActions>
-                    <FlatButton label="Delete" secondary onClick={this.delete} />
-                </CardActions>
+                {!this.props.hideDeleteButton &&
+                    <CardActions>
+                        <FlatButton label="Delete" secondary onClick={this.delete} />
+                    </CardActions>
+                }
             </Card>
         );
     }

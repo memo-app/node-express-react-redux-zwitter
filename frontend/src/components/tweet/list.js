@@ -16,7 +16,11 @@ class TweetList extends Component {
             <div>
                 {!(this.props.tweets instanceof Array) ?
                     <p>No tweets to show.</p> :
-                    this.props.tweets.map(tweet => <Tweet key={tweet._id} {...tweet} />)}
+                    this.props.tweets.map(tweet =>
+                        <Tweet
+                            key={tweet._id} {...tweet}
+                            hideDeleteButton={this.props.hideDeleteButton}
+                        />)}
             </div>
         );
     }
