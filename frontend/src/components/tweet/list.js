@@ -1,30 +1,26 @@
 // Imports
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
 // UI Imports
-import { Card, CardTitle } from 'material-ui/Card';
+import Snackbar from 'material-ui/Snackbar';
 
-function TweetList({ tweets }) {
-    const emptyMessage = (
-        <p>No tweets to show.</p>
-    );
 
-    const tweetsList = (
-        tweets.map(({ _id, text, userId, createdAt }) => (
-            <Card key={ _id }>
-                <Link to={ `/tweet/${ _id }` }><CardTitle title={ text } subtitle={ `${moment(createdAt).fromNow()} by ${userId}` } /></Link>
-            </Card>
-        ))
-    );
+import Tweet from './Tweet';
 
-    return (
-        <div>
-            { tweets.length === 0 ? emptyMessage : tweetsList }
-        </div>
-    );
+class TweetList extends Component {
+    render() {
+        return (
+            <div>
+                {!(this.props.tweets instanceof Array) ?
+                    <p>No tweets to show.</p> :
+                    this.props.tweets.map(tweet => <Tweet key={tweet._id} {...tweet} />)}
+            </div>
+        );
+    }
+
 }
 
 TweetList.propTypes = {

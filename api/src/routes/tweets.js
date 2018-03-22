@@ -144,15 +144,13 @@ tweetRoutes.delete('/:tweetId', authMiddleware, (request, response) => {
 
     Tweet.remove({ _id: request.params.tweetId }, error => {
         if (error) {
-            reponseData.errors.push(error);
+            responseData.errors.push(error.message);
             response.status(400).send(responseData);
         } else {
             responseData.success = true;
             response.send(responseData);
         }
     })
-
-    response.status(500);
 })
 
 // Export
