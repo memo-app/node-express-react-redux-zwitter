@@ -6,12 +6,13 @@ import moment from 'moment';
 // UI Imports
 import { Card, CardTitle } from 'material-ui/Card';
 
+// App Imports
+import Tweet from './Tweet';
+
 function TweetView({ tweet }) {
     return (
         <div>
-            <Card>
-                <CardTitle title={ tweet.text } subtitle={ moment(tweet.createdAt).fromNow() } />
-            </Card>
+            <Tweet { ...tweet } />
 
             <br/>
 
