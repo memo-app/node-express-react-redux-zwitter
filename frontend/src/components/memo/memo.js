@@ -24,7 +24,7 @@ class Memo extends Component {
         return (
             <Card>
                 {this.props.deleted && <Redirect to="/" />}
-                <Link to={`/memo/${this.props._id}`}><CardTitle title={this.props.text} subtitle={`${moment(this.props.createdAt).fromNow()} by ${this.props.userId}`} /></Link>
+                <Link to={`/memo/${this.props._id}`}><CardTitle title={this.props.text} subtitle={`${moment(this.props.createdAt).fromNow()}`} /></Link>
                 {!this.props.hideDeleteButton &&
                     <CardActions>
                         <FlatButton label="Delete" secondary onClick={this.delete} />
