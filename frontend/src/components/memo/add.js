@@ -15,6 +15,7 @@ import { Card, CardText } from 'material-ui/Card';
 
 // App Imports
 import { postMemo } from '../../actions/memo';
+import { fetchCategories } from '../../actions/category';
 import AuthRedirect from './../user/auth-redirect';
 import Loading from '../loading';
 
@@ -28,17 +29,20 @@ class MemoAdd extends Component {
         this.handleDeleteCategory = this.handleDeleteCategory.bind(this);
 
         this.state = {
-            title: '',
-            description: '',
+            memoId: '',
             link: '',
+            title: '',
             categories: [],
+            description: '',
             isLoading: false,
-            error: '',
             notification: false,
             viewMemo: false,
-            memoId: '',
-            currentCategories: ['cats', 'dogs', 'ants', 'cooking', 'recipes', 'computer', 'maths']
+            error: ''
         };
+    }
+
+    componentWillMount() {
+        this.props.fetchCategories();
     }
 
     onSubmit(event) {
@@ -49,8 +53,8 @@ class MemoAdd extends Component {
         let memo = {
             title: this.state.title,
             description: this.state.description,
-            link: this.state.link, categories:
-                this.state.categories
+            link: this.state.link, 
+            categories: this.state.categories
         };
 
         this.setState({ isLoading: true });
@@ -131,7 +135,7 @@ class MemoAdd extends Component {
                     <ChipInput
                         name="categories"
                         floatingLabelText="Categories"
-                        dataSource={this.state.currentCategories}
+                        dataSource={this.props.loading ? [] : this.props.categories}
                         value={this.state.categories}
                         fullWidth={true}
                         onRequestAdd={(category) => this.handleAddCategory(category)}
@@ -171,7 +175,12 @@ class MemoAdd extends Component {
 }
 
 MemoAdd.propTypes = {
-    postMemo: PropTypes.func.isRequired
+    postMemo: PropTypes.func.isRequired,
+    fetchCategories: PropTypes.func.isRequired
 };
 
-export default connect(null, { postMemo })(MemoAdd);
+function categoriesState(state) {
+    return state.categories;
+}
+
+export default connect(categoriesState, { postMemo, fetchCategories })(MemoAdd);
