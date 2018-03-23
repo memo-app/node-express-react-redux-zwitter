@@ -5,7 +5,11 @@ const mongoose = require('mongoose');
 
 // Memo Collection
 let MemoSchema = mongoose.Schema({
-    text: String,
+    title: String,
+    description: String,
+    link: String,
+    categories: [String],
+    thumbnails: [Buffer],
     userId: String,
     createdAt: Date
 });

@@ -9,6 +9,8 @@ import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import { blue500, red500 } from 'material-ui/styles/colors';
 import TextField from 'material-ui/TextField';
+import ChipInput from 'material-ui-chip-input'
+import Chip from 'material-ui/Chip';
 import { Card, CardText } from 'material-ui/Card';
 
 // App Imports
@@ -20,13 +22,22 @@ class MemoAdd extends Component {
     constructor(props) {
         super(props);
 
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.handleAddCategory = this.handleAddCategory.bind(this);
+        this.handleDeleteCategory = this.handleDeleteCategory.bind(this);
+
         this.state = {
-            text: '',
+            title: '',
+            description: '',
+            link: '',
+            categories: [],
             isLoading: false,
             error: '',
             notification: false,
             viewMemo: false,
-            memoId: ''
+            memoId: '',
+            currentCategories: ['cats', 'dogs', 'ants', 'cooking', 'recipes', 'computer', 'maths']
         };
     }
 
@@ -35,21 +46,34 @@ class MemoAdd extends Component {
 
         console.log('E - submit #form-memo');
 
+        let memo = {
+            title: this.state.title,
+            description: this.state.description,
+            link: this.state.link, categories:
+                this.state.categories
+        };
+
         this.setState({ isLoading: true });
 
-        let input = {};
-        input.text = this.state.text;
-
-        if(input.text !=='') {
-            this.props.postMemo(input).then((response) => {
-                if(response.success) {
-                    this.setState({ isLoading: false, notification: true, text: '', error: '', memoId: response.data.memoId });
+        if (memo.title !== '' && memo.link !== '') {
+            this.props.postMemo(memo).then((response) => {
+                if (response.success) {
+                    this.setState({
+                        isLoading: false,
+                        notification: true,
+                        title: '',
+                        description: '',
+                        link: '',
+                        categories: [],
+                        error: '',
+                        memoId: response.data.memoId
+                    });
                 } else {
                     this.setState({ isLoading: false, error: response.errors[0].message });
                 }
             });
         } else {
-            this.setState({ isLoading: false, error: 'memo cannot be empty.', notification: false });
+            this.setState({ isLoading: false, error: 'Please supply link and title for the memo.', notification: false });
         }
     }
 
@@ -59,43 +83,86 @@ class MemoAdd extends Component {
         });
     }
 
+    handleAddCategory(category) {
+        this.setState({
+            categories: [...this.state.categories, category]
+        });
+    }
+
+    handleDeleteCategory(category, index) {
+        this.setState({
+            categories: this.state.categories.slice().filter(c => c !== category)
+        });
+    }
+
     render() {
         return (
             <section>
-                <h2>💭 Save a memo</h2>
+                <h2>💭 Add a memo</h2>
 
-                <br/>
+                <br />
 
-                { this.state.error ? <Card><CardText color={ red500 }>{ this.state.error }</CardText></Card> : '' }
+                {this.state.error ? <Card><CardText color={red500}>{this.state.error}</CardText></Card> : ''}
 
-                { this.state.message ? <Card><CardText color={ blue500 }>{ this.state.message }</CardText></Card> : '' }
+                {this.state.message ? <Card><CardText color={blue500}>{this.state.message}</CardText></Card> : ''}
 
-                <form id="form-memo" onSubmit={ this.onSubmit.bind(this) }>
+                <form id="form-memo" onSubmit={this.onSubmit}>
+
                     <TextField
-                        name="text"
-                        value={ this.state.text }
-                        onChange={ this.onChange.bind(this) }
-                        floatingLabelText="Memo content"
-                        multiLine={ true }
+                        name="link"
+                        value={this.state.link}
+                        onChange={this.onChange}
+                        floatingLabelText="Link"
+                        multiLine={false}
                         rows={1}
-                        fullWidth={ true }
+                        fullWidth={true}
                     />
 
-                    <br/>
-                    <br/>
+                    <TextField
+                        name="title"
+                        value={this.state.title}
+                        onChange={this.onChange}
+                        floatingLabelText="Title"
+                        multiLine={false}
+                        rows={1}
+                        fullWidth={true}
+                    />
 
-                    { this.state.isLoading ? <Loading /> : <RaisedButton label="🐤 Submit" type="submit" backgroundColor={ blue500 } labelColor="white" /> }
+                    <ChipInput
+                        name="categories"
+                        floatingLabelText="Categories"
+                        dataSource={this.state.currentCategories}
+                        value={this.state.categories}
+                        fullWidth={true}
+                        onRequestAdd={(category) => this.handleAddCategory(category)}
+                        onRequestDelete={(category, index) => this.handleDeleteCategory(category, index)}
+                    />
+
+                    <TextField
+                        name="description"
+                        value={this.state.description}
+                        onChange={this.onChange}
+                        floatingLabelText="Description"
+                        multiLine={true}
+                        rows={2}
+                        fullWidth={true}
+                    />
+
+                    <br />
+                    <br />
+
+                    {this.state.isLoading ? <Loading /> : <RaisedButton label="🐤 Submit" type="submit" backgroundColor={blue500} labelColor="white" />}
                 </form>
 
                 <Snackbar
-                    open={ this.state.notification }
+                    open={this.state.notification}
                     message="memo has been posted"
                     autoHideDuration={4000}
                     action="View memo"
-                    onActionClick={ () => ( this.setState({ viewMemo: true }) ) }
+                    onActionClick={() => (this.setState({ viewMemo: true }))}
                 />
 
-                { this.state.viewMemo ? <Redirect to={ `/memo/${ this.state.memoId }` } /> : '' }
+                {this.state.viewMemo ? <Redirect to={`/memo/${this.state.memoId}`} /> : ''}
 
                 <AuthRedirect />
             </section>

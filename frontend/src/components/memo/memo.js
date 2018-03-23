@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 // UI Imports
-import { Card, CardTitle, CardActions } from 'material-ui/Card';
+import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 // App imports
@@ -24,9 +24,21 @@ class Memo extends Component {
         return (
             <Card>
                 {this.props.deleted && <Redirect to="/" />}
-                <Link to={`/memo/${this.props._id}`}><CardTitle title={this.props.text} subtitle={`${moment(this.props.createdAt).fromNow()}`} /></Link>
+                <Link to={`/memo/${this.props._id}`}>
+                    <CardHeader
+                        title={this.props.title}
+                        subtitle={`${moment(this.props.createdAt).fromNow()}`}
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                    />
+                </Link>
+                <CardText>
+                    <a href={this.props.link}>{this.props.link}</a>
+                    {this.props.description !== '' && <div>{this.props.description}</div>}
+                </CardText>
                 {!this.props.hideDeleteButton &&
                     <CardActions>
+                        <FlatButton label="Copy link (not yet working)" primary />
                         <FlatButton label="Delete" secondary onClick={this.delete} />
                     </CardActions>
                 }

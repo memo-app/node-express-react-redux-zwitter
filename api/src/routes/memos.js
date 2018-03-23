@@ -40,9 +40,12 @@ memoRoutes.post('/', authMiddleware, (request, response) => {
     };
 
     if (!isEmpty(request.user)) {
-        if (request.body.text != '') {
+        if (request.body.title != '' && request.body.link) {
             let memo = {
-                text: request.body.text,
+                link: request.body.link,
+                title: request.body.title,
+                catagories: request.body.catagories,
+                description: request.body.description,
                 userId: request.user._id,
                 createdAt: new Date()
             };
@@ -64,7 +67,7 @@ memoRoutes.post('/', authMiddleware, (request, response) => {
                 response.json(responseData);
             });
         } else {
-            responseData.errors.push({ type: 'warning', message: 'Please enter memo.' });
+            responseData.errors.push({ type: 'warning', message: 'Supply memo link and title.' });
 
             response.json(responseData);
         }
