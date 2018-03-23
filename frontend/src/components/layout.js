@@ -41,7 +41,7 @@ class Layout extends Component {
                 />
 
                 <Drawer
-                    docked={true}
+                    docked={false}
                     open={this.state.drawerOpen}
                     onRequestChange={(drawerOpen) => this.setState({ drawerOpen })}
                 >
