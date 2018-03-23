@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+// UI Imports
+import LinearProgress from 'material-ui/LinearProgress';
+
 // App Imports
 //import { fetchmemos } from '../../actions/memo';
 import Loading from '../loading';
@@ -47,11 +50,13 @@ class SearchContainer extends Component {
 
                 <br />
                 <div>
-                <SearchBox setSearchQuery={this.setSearchQuery} searchQuery={this.state.searchQuery} />
+                    <SearchBox setSearchQuery={this.setSearchQuery} searchQuery={this.state.searchQuery} />
                 </div>
                 <br />
 
-                <SearchResults {...this.state} />
+                {this.state.isLoading ?
+                    <LinearProgress mode="indeterminate" /> :
+                    <SearchResults {...this.state} />}
 
                 <br />
             </section>
