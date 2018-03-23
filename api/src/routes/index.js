@@ -8,9 +8,11 @@ const express = require('express');
 let routes = express.Router();
 const memos = require('./memos');
 const users = require('./users');
+const categories = require('./categories');
 
 routes.use('/memos', memos);
 routes.use('/users', users);
+routes.use('/categories', categories);
 
 // Export
 module.exports = routes;
