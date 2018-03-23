@@ -13,7 +13,7 @@ let Memo = require('../models/memo');
 // Common Routes
 let memoRoutes = express.Router();
 
-// Memos (/memos)
+// Memos (GET /memos)
 memoRoutes.get('/', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
@@ -31,8 +31,8 @@ memoRoutes.get('/', authMiddleware, (request, response) => {
     });
 });
 
-// Memo Add (/memo/add)
-memoRoutes.post('/add', authMiddleware, (request, response) => {
+// Memo Add (POST /memos/)
+memoRoutes.post('/', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -75,7 +75,7 @@ memoRoutes.post('/add', authMiddleware, (request, response) => {
     }
 });
 
-// Search Memos (/memo/search)
+// Search Memos (GET /memos/search?searchTerm=123)
 memoRoutes.get('/search', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
@@ -106,13 +106,13 @@ memoRoutes.get('/search', authMiddleware, (request, response) => {
                 }
             });
     } else {
-        responseData.errors.push("No search term supplied!!!");
+        responseData.errors.push({type: 'warning', message: 'No search term supplied'});
         response.json(responseData);
     }
 });
 
 
-// Single Memos (/memo/memoId)
+// Single Memo (GET /memos/id)
 memoRoutes.get('/:memoId', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
@@ -134,7 +134,7 @@ memoRoutes.get('/:memoId', authMiddleware, (request, response) => {
     }
 });
 
-// Delete Memo (/memo/memoId)
+// Delete Memo (DELETE /memos/id)
 memoRoutes.delete('/:memoId', authMiddleware, (request, response) => {
     let responseData = {
         success: false,

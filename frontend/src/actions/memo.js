@@ -61,7 +61,7 @@ export function postMemo(memo) {
     const token = localStorage.getItem('token');
 
     return dispatch => {
-        return fetch(`${ config.url.api }memos/add`, {
+        return fetch(`${ config.url.api }memos`, {
             method: 'post',
 
             body: JSON.stringify(memo),
