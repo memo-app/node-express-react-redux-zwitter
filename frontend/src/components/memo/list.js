@@ -20,6 +20,7 @@ class MemoList extends Component {
                         <Memo
                             key={memo._id} {...memo}
                             hideDeleteButton={this.props.hideDeleteButton}
+                            expandDetails={this.props.expandDetails}
                         />)}
             </div>
         );
