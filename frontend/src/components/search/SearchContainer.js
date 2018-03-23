@@ -36,22 +36,21 @@ class SearchContainer extends Component {
         });
     }
 
-
-
-
     componentDidMount() {
         //this.props.fetchMemos();
     }
 
-
-
-
     render() {
         return (
             <section>
-                <h2>memo search</h2>
+                <h2>Memo search</h2>
 
+                <br />
+                <div>
                 <SearchBox setSearchQuery={this.setSearchQuery} searchQuery={this.state.searchQuery} />
+                </div>
+                <br />
+
                 <SearchResults {...this.state} />
 
                 <br />

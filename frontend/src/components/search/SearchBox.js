@@ -17,12 +17,7 @@ class SearchBox extends Component {
 
     render() {
         return (
-            <TextField
-                fullWidth={true}
-                inputStyle={{ color: 'white' }}
-                hintText="Search memos ..."
-                value={this.props.searchTerm}
-            />
+            <input type="text" placeholder="Search memos ..." value={this.props.searchQuery} onChange={this.props.setSearchQuery} />
         );
     }
 }

@@ -19,11 +19,13 @@ class memoSearchResults extends Component {
     render() {
         const numResults = this.props.results.length;
         return (
+            this.props.searchQuery ?
             <div>
-                <h3> memo Search Results </h3>
                 <p>{numResults} results found for term <i>{this.props.searchQuery}</i> </p>
+                <br />
                 {(numResults > 0) && <MemoList memos={this.props.results} hideDeleteButton={true} />}
             </div>
+            : null
         );
     }
 }
