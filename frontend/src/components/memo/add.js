@@ -85,7 +85,7 @@ class MemoAdd extends Component {
 
     handleAddCategory(category) {
         this.setState({
-            categories: [...this.state.categories, category]
+            categories: [...this.state.categories, category.toLowerCase()]
         });
     }
 
