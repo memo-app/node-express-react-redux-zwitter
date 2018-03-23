@@ -95,7 +95,9 @@ memoRoutes.get('/search', authMiddleware, (request, response) => {
                 $caseSensitive: false,
                 $diacriticSensitive: false
             }
-        })
+        },
+            { score: { $meta: "textScore" } })
+            .sort({ score: { $meta: 'textScore' } })
             .skip(request.query.offset || 0)
             .limit(request.query.limit || 10)
             .exec(function (error, results) {
@@ -109,7 +111,7 @@ memoRoutes.get('/search', authMiddleware, (request, response) => {
                 }
             });
     } else {
-        responseData.errors.push({type: 'warning', message: 'No search term supplied'});
+        responseData.errors.push({ type: 'warning', message: 'No search term supplied' });
         response.json(responseData);
     }
 });
