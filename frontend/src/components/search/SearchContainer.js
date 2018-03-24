@@ -1,14 +1,14 @@
 // Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
 // UI Imports
 import LinearProgress from 'material-ui/LinearProgress';
 
 // App Imports
 //import { fetchmemos } from '../../actions/memo';
-import Loading from '../loading';
+//import Loading from '../loading';
 import SearchBox from './SearchBox';
 import SearchResults from './SearchResults';
 import config from '../../config';

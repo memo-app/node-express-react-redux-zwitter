@@ -1,15 +1,12 @@
 // Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
 // App Imports
-import { fetchMemo } from '../../actions/memo';
-import Loading from '../loading';
+//import { fetchMemo } from '../../actions/memo';
+//import Loading from '../loading';
 import MemoList from '../memo/list';
-
-// UI Imports
-import { Card, CardTitle } from 'material-ui/Card';
 
 class memoSearchResults extends Component {
     componentDidMount() {

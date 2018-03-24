@@ -26,7 +26,7 @@ class MemoListByCategoryContainer extends Component {
     render() {
         return (
             <section>
-                <h2><span role="img">💭</span> {this.props.match.params.category}</h2>
+                <h2><span role="img" aria-label="">💭</span> {this.props.match.params.category}</h2>
 
                 <br />
 

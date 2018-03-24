@@ -16,7 +16,7 @@ class MemoListContainer extends Component {
     render() {
         return (
             <section>
-                <h2><span role="img">💭</span> Memos</h2>
+                <h2><span role="img" aria-label="">💭</span> Memos</h2>
 
                 <br/>
 

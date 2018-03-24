@@ -5,9 +5,9 @@ class About extends Component {
     render() {
         return (
             <section>
-                <h2>ℹ️ About</h2>
+                <h2><span role="img" aria-label="">ℹ️</span> About</h2>
 
-                <p>Github Repo: <a href="https://github.com/memo-app/web-app" target="_blank">https://github.com/memo-app/web-app</a></p>
+                <p>Github Repo: <a href="https://github.com/memo-app/web-app">https://github.com/memo-app/web-app</a></p>
             </section>
         )
     }

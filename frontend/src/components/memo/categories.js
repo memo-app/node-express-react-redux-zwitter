@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // UI Imports
 import Chip from 'material-ui/Chip';
 
-export default class Categories extends React.Component {
+export default class Categories extends Component {
     constructor(props) {
         super(props);
         this.styles = {
@@ -23,7 +23,7 @@ export default class Categories extends React.Component {
         return (
             <div style={this.styles.wrapper}>
                 {this.props.list.map(item =>
-                    <Link to={`/memos/category/${item}`}>
+                    <Link key={item} to={`/memos/category/${item}`}>
                         <Chip key={item} style={this.styles.chip}>{item}</Chip>
                     </Link>
                 )}

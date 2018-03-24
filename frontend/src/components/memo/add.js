@@ -9,8 +9,7 @@ import Snackbar from 'material-ui/Snackbar';
 import RaisedButton from 'material-ui/RaisedButton';
 import { blue500, red500 } from 'material-ui/styles/colors';
 import TextField from 'material-ui/TextField';
-import ChipInput from 'material-ui-chip-input'
-import Chip from 'material-ui/Chip';
+import ChipInput from 'material-ui-chip-input';
 import { Card, CardText } from 'material-ui/Card';
 
 // App Imports
@@ -102,7 +101,7 @@ class MemoAdd extends Component {
     render() {
         return (
             <section>
-                <h2>💭 Add a memo</h2>
+                <h2><span role="img" aria-label="">💭</span> Add a memo</h2>
 
                 <br />
 

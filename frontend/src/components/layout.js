@@ -55,16 +55,22 @@ class Layout extends Component {
                         open={this.state.drawerOpen}
                         onRequestChange={(drawerOpen) => this.setState({ drawerOpen })}
                     >
-                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/" />}>🏠 Home</MenuItem>
-                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/search" />}>🔍 Search</MenuItem>
-                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/about" />}>ℹ️ About</MenuItem>
+                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/" />}>
+                            <span role="img" aria-label="">🏠</span> Home
+                        </MenuItem>
+                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/search" />}>
+                            <span role="img" aria-label="">🔍</span> Search
+                        </MenuItem>
+                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/about" />}>
+                            <span role="img" aria-label="">ℹ️</span> About
+                        </MenuItem>
 
                         <List>
                             <Subheader>Categories</Subheader>
                             {categories ?
                                 categories.map(c =>
-                                    <Link to={`/memos/category/${c}`} onTouchTap={this.handleDrawerToggle}>
-                                    <ListItem>{c}</ListItem>
+                                    <Link key={c} to={`/memos/category/${c}`} onTouchTap={this.handleDrawerToggle}>
+                                        <ListItem>{c}</ListItem>
                                     </Link>) :
                                 <Subheader><Loading /></Subheader>
                             }

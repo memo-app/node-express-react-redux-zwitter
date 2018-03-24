@@ -1,11 +1,6 @@
 // Imports
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-
-// UI Imports
-import Snackbar from 'material-ui/Snackbar';
 
 // App Imports
 import Memo from './memo';
@@ -14,7 +9,7 @@ class MemoList extends Component {
     render() {
         return (
             <div>
-                {!(this.props.memos instanceof Array) || this.props.memos.length == 0 ?
+                {!(this.props.memos instanceof Array) || this.props.memos.length === 0 ?
                     <p>No memos to show.</p> :
                     this.props.memos.map(memo =>
                         <Memo

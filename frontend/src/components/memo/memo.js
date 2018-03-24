@@ -1,7 +1,7 @@
 // Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 // UI Imports
@@ -10,7 +10,6 @@ import FlatButton from 'material-ui/FlatButton';
 
 // App imports
 import { deleteMemo } from '../../actions/memo';
-import Loading from '../loading';
 import Categories from './categories';
 
 class Memo extends Component {
@@ -22,7 +21,7 @@ class Memo extends Component {
         this.props.deleteMemo(this.props._id);
     }
     render() {
-        const isExpandable = this.props.description && this.props.description.length > 0
+        const isExpandable = this.props.description !== undefined && this.props.description.length > 0
             && !this.props.expandDetails;
         return (
             <Card>

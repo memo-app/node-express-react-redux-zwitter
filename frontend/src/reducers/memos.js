@@ -75,7 +75,7 @@ export function memo(state = { details: {}, error: false, loading: false }, acti
                     error: false,
                     loading: true
                 }
-            })
+            });
 
         case REMOVE_MEMO_SUCCESS:
             return update(state, {
@@ -84,6 +84,14 @@ export function memo(state = { details: {}, error: false, loading: false }, acti
                     deleted: true,
                     error: false,
                     loading: false
+                }
+            });
+
+        case REMOVE_MEMO_FAIL:
+            return update(state, {
+                $merge: {
+                    loading: false,
+                    error: true
                 }
             })
 
