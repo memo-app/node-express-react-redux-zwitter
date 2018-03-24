@@ -5,15 +5,34 @@ const mongoose = require('mongoose');
 
 // Memo Collection
 let MemoSchema = mongoose.Schema({
-    title: String,
+    link: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    categories: {
+        type: [String],
+        trim: true,
+        lowercase: true
+    },
     description: String,
-    link: String,
-    categories: [String],
     thumbnails: [Buffer],
-    userId: String,
-    createdAt: Date
+    userId: {
+        type: String,
+        required: true,
+        index: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        index: true
+    }
 });
 
+// Create text index
 MemoSchema.index({
     link: 'text',
     title: 'text',
