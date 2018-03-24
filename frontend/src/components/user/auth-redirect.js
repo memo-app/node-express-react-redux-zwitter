@@ -10,7 +10,7 @@ class AuthRedirect extends Component {
 
         return (
             <div>
-                { !isAuthenticated ? <Redirect to="/" /> : '' }
+                { !isAuthenticated ? <Redirect to="/user/login" /> : '' }
             </div>
         );
     }

@@ -9,8 +9,11 @@ import Loading from '../loading';
 import MemoList from './list';
 
 class MemoListContainer extends Component {
-    componentDidMount() {
-        this.props.fetchMemos();
+    
+    componentWillMount() {
+        if (this.props.user.isAuthenticated) {
+            this.props.fetchMemos();
+        }
     }
 
     render() {
@@ -33,6 +36,7 @@ MemoListContainer.propTypes = {
 
 function memosState(state) {
     return {
+        user: state.user,
         memos: state.memos
     }
 }

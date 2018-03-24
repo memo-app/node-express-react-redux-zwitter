@@ -15,7 +15,6 @@ import { Card, CardText } from 'material-ui/Card';
 // App Imports
 import { postMemo } from '../../actions/memo';
 import { fetchCategories } from '../../actions/category';
-import AuthRedirect from './../user/auth-redirect';
 import Loading from '../loading';
 
 class MemoAdd extends Component {
@@ -166,8 +165,6 @@ class MemoAdd extends Component {
                 />
 
                 {this.state.viewMemo ? <Redirect to={`/memo/${this.state.memoId}`} /> : ''}
-
-                <AuthRedirect />
             </section>
         )
     }

@@ -1,7 +1,6 @@
 // Imports
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -27,8 +26,10 @@ class Layout extends Component {
         };
     }
 
-    componentWillMount() {
-        this.props.fetchCategories();
+    componentDidUpdate(nextProps) {
+        if (nextProps.user.isAuthenticated && !this.props.categories) {
+            nextProps.fetchCategories();
+        }
     }
 
     handleDrawerToggle = () => this.setState({ drawerOpen: !this.state.drawerOpen });
@@ -49,7 +50,7 @@ class Layout extends Component {
                     iconElementRight={isAuthenticated ? <UserButtonLogged /> : <UserButtonLogin />}
                 />
 
-                {isAuthenticated ?
+                {isAuthenticated &&
                     <Drawer
                         docked={false}
                         open={this.state.drawerOpen}
@@ -75,8 +76,7 @@ class Layout extends Component {
                                 <Subheader><Loading /></Subheader>
                             }
                         </List>
-                    </Drawer> :
-                    <Redirect to="/user/login" />
+                    </Drawer>
                 }
 
                 {this.props.children}
