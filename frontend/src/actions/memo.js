@@ -10,12 +10,18 @@ export const REMOVE_MEMO_SUCCESS = 'REMOVE_MEMO_SUCCESS';
 export const REMOVE_MEMO_FAIL = 'REMOVE_MEMO_FAIL';
 
 export function fetchMemos() {
+    const token = localStorage.getItem('token');
+
     return dispatch => {
         dispatch({
             type: FETCH_MEMOS_BEGIN
         });
 
-        return fetch(`${ config.url.api }memos`).then(function(response) {
+        return fetch(`${ config.url.api }memos`, {
+            headers: {
+                'x-access-token': token
+            }
+        }).then(function(response) {
             if (response.ok) {
                 response.json().then(function(response) {
                     dispatch({
@@ -33,12 +39,18 @@ export function fetchMemos() {
 }
 
 export function fetchMemo(memoId) {
+    const token = localStorage.getItem('token');
+
     return dispatch => {
         dispatch({
             type: FETCH_MEMO_BEGIN
         });
 
-        return fetch(`${ config.url.api }memos/${ memoId }`).then(function(response) {
+        return fetch(`${ config.url.api }memos/${ memoId }`, {
+            headers: {
+                'x-access-token': token
+            }
+        }).then(function(response) {
             if (response.ok) {
                 response.json().then(function(response) {
                     if(response.success) {

@@ -7,16 +7,18 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config/index');
 
 // Auth Middleware
-let authMiddleware = function (request, response, next) {
-    let token = request.body.token || request.query.token || request.headers['x-access-token'] || request.cookies.token;
+const authMiddleware = function (request, response, next) {
+    const token = request.body.token || request.query.token ||
+        request.headers['x-access-token'] || request.cookies.token;
 
-    if(token && token != 'null') {
+    if (token && token != 'null') {
         request.user = jwt.verify(token, config.secret);
+        if (request.user) {
+            next();
+        }
     } else {
-        request.user = {};
+        response.status(401).json(({ errors: [{ type: 'critical', message: 'Unauthorized' }] }));
     }
-
-    next();
 };
 
 // Export

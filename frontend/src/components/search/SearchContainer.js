@@ -25,8 +25,14 @@ class SearchContainer extends Component {
     }
 
     setSearchQuery({ target }) {
+        const token = localStorage.getItem('token');
+        
         this.setState({ isLoading: true, searchQuery: target.value });
-        return fetch(`${config.url.api}memos/search?searchTerm=${target.value}`).then(response => {
+        return fetch(`${config.url.api}memos/search?searchTerm=${target.value}`, {
+            headers: {
+                'x-access-token': token
+            }
+        }).then(response => {
             if (response.ok) {
                 response.json().then(response => {
                     this.setState({ isLoading: false, results: response.data });

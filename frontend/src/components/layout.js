@@ -1,6 +1,7 @@
 // Imports
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -36,10 +37,12 @@ class Layout extends Component {
                         <span style={{ marginRight: '20px' }}>MemoApp</span>
                         <SearchBox searchTerm={this.state.searchTerm} />
                     </div>}
+                    showMenuIconButton={isAuthenticated}
                     onLeftIconButtonClick={this.handleDrawerToggle}
                     iconElementRight={isAuthenticated ? <UserButtonLogged /> : <UserButtonLogin />}
                 />
 
+                {isAuthenticated ?
                 <Drawer
                     docked={false}
                     open={this.state.drawerOpen}
@@ -55,7 +58,9 @@ class Layout extends Component {
                         <ListItem>Dogs</ListItem>
                         <ListItem>Mathematics and computer science</ListItem>
                     </List>
-                </Drawer>
+                </Drawer> :
+                <Redirect to="/user/login" />
+                }
 
                 {this.props.children}
             </div>
