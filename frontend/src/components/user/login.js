@@ -129,7 +129,7 @@ class UserLogin extends Component {
                     autoHideDuration={ 2000 }
                 />
 
-                { this.state.logged ? <Redirect to="/memo/add" /> : '' }
+                { this.state.logged ? <Redirect to="/" /> : '' }
             </section>
         )
     }
