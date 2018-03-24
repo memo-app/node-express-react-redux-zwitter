@@ -21,7 +21,7 @@ memoRoutes.get('/', authMiddleware, (request, response) => {
         errors: []
     };
 
-    Memo.find({}).sort('-createdAt').exec(function (error, documents) {
+    Memo.find({ userId: request.user._id }).sort('-createdAt').exec(function (error, documents) {
         if (documents.length > 0) {
             responseData.data = documents;
             responseData.success = true;
@@ -89,6 +89,7 @@ memoRoutes.get('/search', authMiddleware, (request, response) => {
     if (request.query.searchTerm) {
 
         Memo.find({
+            userId: request.user._id,
             $text: {
                 $search: request.query.searchTerm,
                 $language: "english",
