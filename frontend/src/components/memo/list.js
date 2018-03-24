@@ -14,7 +14,7 @@ class MemoList extends Component {
     render() {
         return (
             <div>
-                {!(this.props.memos instanceof Array) ?
+                {!(this.props.memos instanceof Array) || this.props.memos.length == 0 ?
                     <p>No memos to show.</p> :
                     this.props.memos.map(memo =>
                         <Memo

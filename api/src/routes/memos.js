@@ -21,14 +21,32 @@ memoRoutes.get('/', authMiddleware, (request, response) => {
         errors: []
     };
 
-    Memo.find({ userId: request.user._id }).sort('-createdAt').exec(function (error, documents) {
-        if (documents.length > 0) {
+    Memo.find({ userId: request.user._id })
+        .sort('-createdAt').exec(function (error, documents) {
+            if (documents.length > 0) {
+                responseData.data = documents;
+                responseData.success = true;
+            }
+
+            response.json(responseData);
+        });
+});
+
+// Memos by category (GET /memos/category/category-name
+memoRoutes.get('/category/:category', authMiddleware, (request, response) => {
+    let responseData = {
+        success: false,
+        data: {},
+        errors: []
+    };
+
+    Memo.find({ userId: request.user._id, categories: request.params.category })
+        .sort('-createdAt').exec(function (error, documents) {
             responseData.data = documents;
             responseData.success = true;
-        }
 
-        response.json(responseData);
-    });
+            response.json(responseData);
+        })
 });
 
 // Memo Add (POST /memos/)

@@ -8,6 +8,7 @@ import SearchContainer from './components/search/SearchContainer'
 import MemoListContainer from './components/memo/list-container';
 import MemoAdd from './components/memo/add';
 import MemoViewContainer from './components/memo/view-container';
+import MemoListByCategoryContainer from './components/memo/category-container';
 import UserLogin from './components/user/login';
 import UserRegister from './components/user/register';
 import About from './components/about';
@@ -20,6 +21,7 @@ const App  = () => (
             <Route path="/search" component={ SearchContainer} />
             <Route path="/memo/add" component={ MemoAdd } />
             <Route path="/memo/:memoId" component={ MemoViewContainer } />
+            <Route path="/memos/category/:category" component={ MemoListByCategoryContainer} />
             <Route path="/user/login" component={ UserLogin } />          
             <Route path="/user/register" component={ UserRegister } />
             <Route path="/about" component={ About } />
