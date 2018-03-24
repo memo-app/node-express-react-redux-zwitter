@@ -154,7 +154,7 @@ class MemoAdd extends Component {
                     <br />
                     <br />
 
-                    {this.state.isLoading ? <Loading /> : <RaisedButton label="🐤 Submit" type="submit" backgroundColor={blue500} labelColor="white" />}
+                    {this.state.isLoading ? <Loading /> : <RaisedButton label="🐤 Submit" type="submit" backgroundColor={blue500} labelColor="#ffffff" />}
                 </form>
 
                 <Snackbar

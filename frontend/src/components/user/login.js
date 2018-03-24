@@ -48,8 +48,6 @@ class UserLogin extends Component {
                         isLoading: false,
                         isLoggingIn: false,
                         notification: true,
-                        username: '',
-                        password: '',
                         error: ''
                     });
 
@@ -112,7 +110,7 @@ class UserLogin extends Component {
                     <br/>
                     <br/>
 
-                    <RaisedButton label="Submit" type="submit" backgroundColor={ blue500 } labelColor="white" />
+                    <RaisedButton label="Submit" type="submit" backgroundColor={ blue500 } labelColor="#ffffff" />
 
                     <Link to="/user/register"><FlatButton label="Register" /></Link>
                 </form>
