@@ -16,6 +16,8 @@ import { List, ListItem } from 'material-ui/List';
 import SearchBox from './search/SearchBox';
 import UserButtonLogin from './user/button/login';
 import UserButtonLogged from './user/button/logged';
+import Loading from './loading';
+import { fetchCategories } from './../actions/category';
 
 class Layout extends Component {
     constructor(props) {
@@ -25,10 +27,15 @@ class Layout extends Component {
         };
     }
 
+    componentWillMount() {
+        this.props.fetchCategories();
+    }
+
     handleDrawerToggle = () => this.setState({ drawerOpen: !this.state.drawerOpen });
 
     render() {
         const { isAuthenticated } = this.props.user;
+        const categories = this.props.categories;
 
         return (
             <div>
@@ -43,23 +50,27 @@ class Layout extends Component {
                 />
 
                 {isAuthenticated ?
-                <Drawer
-                    docked={false}
-                    open={this.state.drawerOpen}
-                    onRequestChange={(drawerOpen) => this.setState({ drawerOpen })}
-                >
-                    <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/" />}>🏠 Home</MenuItem>
-                    <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/search" />}>🔍 Search</MenuItem>
-                    <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/about" />}>ℹ️ About</MenuItem>
+                    <Drawer
+                        docked={false}
+                        open={this.state.drawerOpen}
+                        onRequestChange={(drawerOpen) => this.setState({ drawerOpen })}
+                    >
+                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/" />}>🏠 Home</MenuItem>
+                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/search" />}>🔍 Search</MenuItem>
+                        <MenuItem onTouchTap={this.handleDrawerToggle} containerElement={<Link to="/about" />}>ℹ️ About</MenuItem>
 
-                    <List>
-                        <Subheader>Categories</Subheader>
-                        <ListItem>Cats</ListItem>
-                        <ListItem>Dogs</ListItem>
-                        <ListItem>Mathematics and computer science</ListItem>
-                    </List>
-                </Drawer> :
-                <Redirect to="/user/login" />
+                        <List>
+                            <Subheader>Categories</Subheader>
+                            {categories ?
+                                categories.map(c =>
+                                    <Link to={`/memos/category/${c}`} onTouchTap={this.handleDrawerToggle}>
+                                    <ListItem>{c}</ListItem>
+                                    </Link>) :
+                                <Subheader><Loading /></Subheader>
+                            }
+                        </List>
+                    </Drawer> :
+                    <Redirect to="/user/login" />
                 }
 
                 {this.props.children}
@@ -74,8 +85,9 @@ Layout.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        categories: state.categories.categories
     }
 }
 
-export default connect(mapStateToProps, {})(Layout);
+export default connect(mapStateToProps, { fetchCategories })(Layout);
