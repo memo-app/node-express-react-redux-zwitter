@@ -166,7 +166,7 @@ memoRoutes.delete('/:memoId', authMiddleware, (request, response) => {
         errors: []
     };
 
-    Memo.remove({ _id: request.params.memoId }, error => {
+    Memo.remove({ userId: request.user._id, _id: request.params.memoId }, error => {
         if (error) {
             responseData.errors.push(error.message);
             response.status(400).send(responseData);
