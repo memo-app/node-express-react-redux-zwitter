@@ -7,6 +7,7 @@ import LinkPreview from 'react-native-link-preview';
 
 // UI Imports
 import Snackbar from 'material-ui/Snackbar';
+import LinearProgress from 'material-ui/LinearProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import { blue500, red500 } from 'material-ui/styles/colors';
 import TextField from 'material-ui/TextField';
@@ -24,6 +25,7 @@ class MemoAdd extends Component {
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.onLinkChange = this.onLinkChange.bind(this);
         this.handleAddCategory = this.handleAddCategory.bind(this);
         this.handleDeleteCategory = this.handleDeleteCategory.bind(this);
 
@@ -33,6 +35,8 @@ class MemoAdd extends Component {
             title: '',
             categories: [],
             description: '',
+            thumbnails: [],
+            loadingPreview: false,
             isLoading: false,
             notification: false,
             viewMemo: false,
@@ -63,11 +67,13 @@ class MemoAdd extends Component {
                 if (response.success) {
                     this.setState({
                         isLoading: false,
+                        loadingPreview: false,
                         notification: true,
                         title: '',
                         description: '',
                         link: '',
                         categories: [],
+                        thumbnails: [],
                         error: '',
                         memoId: response.data.memoId
                     });
@@ -76,7 +82,9 @@ class MemoAdd extends Component {
                 }
             });
         } else {
-            this.setState({ isLoading: false, error: 'Please supply link and title for the memo.', notification: false });
+            this.setState({ isLoading: false, 
+                error: 'Please supply link and title for the memo.', 
+                notification: false });
         }
     }
 
@@ -84,10 +92,32 @@ class MemoAdd extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+    }
 
-        if (event.target.name === 'link') {
-            LinkPreview.getPreview(event.target.value)
-                .then(data => console.debug(data));
+    onLinkChange(event) {
+        const link = event.target.value;
+        this.setState({
+            link: link
+        });
+
+        if (link === '') {
+            this.setState({ loadingPreview: false });
+        } else {
+            this.setState({
+                loadingPreview: true
+            });
+
+            LinkPreview.getPreview(link)
+                .then(data => {
+                    this.setState({
+                        loadingPreview: false,
+                        title: data.title,
+                        description: data.description
+                    });
+                })
+                .catch(error => {
+                    this.setState({ loadingPreview: false });
+                });
         }
     }
 
@@ -119,12 +149,15 @@ class MemoAdd extends Component {
                     <TextField
                         name="link"
                         value={this.state.link}
-                        onChange={this.onChange}
+                        onChange={this.onLinkChange}
                         floatingLabelText="Link"
                         multiLine={false}
                         rows={1}
                         fullWidth={true}
                     />
+
+                    {this.state.loadingPreview &&
+                        <LinearProgress mode="indeterminate" />}
 
                     <TextField
                         name="title"
@@ -136,16 +169,6 @@ class MemoAdd extends Component {
                         fullWidth={true}
                     />
 
-                    <ChipInput
-                        name="categories"
-                        floatingLabelText="Categories"
-                        dataSource={this.props.loading ? [] : this.props.categories}
-                        value={this.state.categories}
-                        fullWidth={true}
-                        onRequestAdd={(category) => this.handleAddCategory(category)}
-                        onRequestDelete={(category, index) => this.handleDeleteCategory(category, index)}
-                    />
-
                     <TextField
                         name="description"
                         value={this.state.description}
@@ -154,6 +177,16 @@ class MemoAdd extends Component {
                         multiLine={true}
                         rows={2}
                         fullWidth={true}
+                    />
+
+                    <ChipInput
+                        name="categories"
+                        floatingLabelText="Categories"
+                        dataSource={this.props.loading ? [] : this.props.categories}
+                        value={this.state.categories}
+                        fullWidth={true}
+                        onRequestAdd={(category) => this.handleAddCategory(category)}
+                        onRequestDelete={(category, index) => this.handleDeleteCategory(category, index)}
                     />
 
                     <br />
