@@ -20,20 +20,15 @@ categoryRoutes.get('/', authMiddleware, (request, response) => {
         errors: []
     };
 
-    // Needs to be finished
-    /*
-    Memo.find({ userId: request.user._id}).exec(function (error, documents) {
-        if (documents > 0) {
+    // Returns all used categories
+    Memo.distinct("categories", { userId: request.user._id }).exec(function (error, documents) {
+        if(documents){
             responseData.data = documents;
             responseData.success = true;
         }
-
         response.json(responseData);
     });
-    */
 
-    // Mocked response
-    response.json({ success: true, data: ['cats', 'dogs', 'rats'], errors: []});
 });
 
 // Export
