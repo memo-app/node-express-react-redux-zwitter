@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import LinkPreview from 'react-native-link-preview';
 
 // UI Imports
 import Snackbar from 'material-ui/Snackbar';
@@ -51,7 +52,7 @@ class MemoAdd extends Component {
         let memo = {
             title: this.state.title,
             description: this.state.description,
-            link: this.state.link, 
+            link: this.state.link,
             categories: this.state.categories
         };
 
@@ -83,6 +84,11 @@ class MemoAdd extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
+
+        if (event.target.name === 'link') {
+            LinkPreview.getPreview(event.target.value)
+                .then(data => console.debug(data));
+        }
     }
 
     handleAddCategory(category) {
