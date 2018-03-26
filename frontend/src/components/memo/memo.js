@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 // UI Imports
-import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
+import { Card, CardHeader, CardMedia, CardText, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 // App imports
@@ -38,6 +38,11 @@ class Memo extends Component {
                     actAsExpander={isExpandable}
                     showExpandableButton={isExpandable}
                 />
+
+                {this.props.thumbnails && this.props.thumbnails.length > 0 &&
+                    <CardMedia>
+                        <img src={this.props.thumbnails[0]} alt="" />
+                    </CardMedia>}
 
                 {this.props.description &&
                     <CardText expandable={isExpandable}>

@@ -64,6 +64,7 @@ memoRoutes.post('/', authMiddleware, (request, response) => {
                 title: request.body.title,
                 categories: request.body.categories.map(c => c.toLowerCase()),
                 description: request.body.description,
+                thumbnails: request.body.thumbnails,
                 userId: request.user._id,
                 createdAt: new Date()
             };

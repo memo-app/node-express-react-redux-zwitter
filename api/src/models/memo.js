@@ -19,7 +19,7 @@ let MemoSchema = mongoose.Schema({
         lowercase: true
     },
     description: String,
-    thumbnails: [Buffer],
+    thumbnails: [String],
     userId: {
         type: String,
         required: true,

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import LinkPreview from 'react-native-link-preview';
+import config from '../../config';
 
 // UI Imports
 import Snackbar from 'material-ui/Snackbar';
@@ -57,7 +57,8 @@ class MemoAdd extends Component {
             title: this.state.title,
             description: this.state.description,
             link: this.state.link,
-            categories: this.state.categories
+            categories: this.state.categories,
+            thumbnails: this.state.thumbnails
         };
 
         this.setState({ isLoading: true });
@@ -82,9 +83,11 @@ class MemoAdd extends Component {
                 }
             });
         } else {
-            this.setState({ isLoading: false, 
-                error: 'Please supply link and title for the memo.', 
-                notification: false });
+            this.setState({
+                isLoading: false,
+                error: 'Please supply link and title for the memo.',
+                notification: false
+            });
         }
     }
 
@@ -94,6 +97,16 @@ class MemoAdd extends Component {
         });
     }
 
+    isUrl(str) {
+        var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        return pattern.test(str);
+    }
+
     onLinkChange(event) {
         const link = event.target.value;
         this.setState({
@@ -101,24 +114,46 @@ class MemoAdd extends Component {
         });
 
         if (link === '') {
-            this.setState({ loadingPreview: false });
-        } else {
+            this.resetLink();
+        } else if (this.isUrl(link)) {
             this.setState({
                 loadingPreview: true
             });
 
-            LinkPreview.getPreview(link)
-                .then(data => {
-                    this.setState({
-                        loadingPreview: false,
-                        title: data.title,
-                        description: data.description
+            const token = localStorage.getItem('token');
+
+            fetch(`${config.url.api}scraper/scrape?url=${encodeURIComponent(link)}`, {
+                headers: {
+                    'x-access-token': token
+                }
+            }).then(response => {
+                console.log(response.data);
+                if (response.ok) {
+                    response.json().then(response => {
+                        this.setState({
+                            loadingPreview: false,
+                            title: response.data.title,
+                            description: response.data.description,
+                            categories: response.data.categories,
+                            thumbnails: response.data.thumbnails
+                        });
                     });
-                })
-                .catch(error => {
-                    this.setState({ loadingPreview: false });
-                });
+                }
+            }).catch(error => {
+                this.setState({ error: error });
+            }).finally(() => this.setState({ loadingPreview: false }));
+
         }
+    }
+
+    resetLink() {
+        this.setState({
+            loadingPreview: false,
+            title: '',
+            description: '',
+            categories: [],
+            thumbnails: []
+        });
     }
 
     handleAddCategory(category) {
@@ -156,10 +191,12 @@ class MemoAdd extends Component {
                         fullWidth={true}
                     />
 
-                    {this.state.loadingPreview &&
-                        <LinearProgress mode="indeterminate" />}
+                    {
+                        this.state.loadingPreview &&
+                        <LinearProgress mode="indeterminate" />
+                    }
 
-                    <TextField
+                    < TextField
                         name="title"
                         value={this.state.title}
                         onChange={this.onChange}
@@ -189,11 +226,13 @@ class MemoAdd extends Component {
                         onRequestDelete={(category, index) => this.handleDeleteCategory(category, index)}
                     />
 
+                    {this.state.thumbnails.length > 0 && <img style={{ maxWidth: '75%', float: 'right' }} src={this.state.thumbnails[0]} />}
+
                     <br />
                     <br />
 
-                    {this.state.isLoading ? <Loading /> : <RaisedButton label="🐤 Submit" type="submit" backgroundColor={blue500} labelColor="#ffffff" />}
-                </form>
+                    {this.state.isLoading ? <Loading /> : <RaisedButton label="🐤 Save" type="submit" backgroundColor={blue500} labelColor="#ffffff" />}
+                </form >
 
                 <Snackbar
                     open={this.state.notification}
@@ -204,7 +243,7 @@ class MemoAdd extends Component {
                 />
 
                 {this.state.viewMemo ? <Redirect to={`/memo/${this.state.memoId}`} /> : ''}
-            </section>
+            </section >
         )
     }
 }

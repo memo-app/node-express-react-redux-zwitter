@@ -9,10 +9,12 @@ let routes = express.Router();
 const memos = require('./memos');
 const users = require('./users');
 const categories = require('./categories');
+const scraper = require('./scraper');
 
 routes.use('/memos', memos);
 routes.use('/users', users);
 routes.use('/categories', categories);
+routes.use('/scraper', scraper);
 
 // Export
 module.exports = routes;
