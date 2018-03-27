@@ -127,7 +127,6 @@ class MemoAdd extends Component {
                     'x-access-token': token
                 }
             }).then(response => {
-                console.log(response.data);
                 if (response.ok) {
                     response.json().then(response => {
                         this.setState({
@@ -226,7 +225,8 @@ class MemoAdd extends Component {
                         onRequestDelete={(category, index) => this.handleDeleteCategory(category, index)}
                     />
 
-                    {this.state.thumbnails.length > 0 && <img style={{ maxWidth: '75%', float: 'right' }} src={this.state.thumbnails[0]} />}
+                    {this.state.thumbnails && this.state.thumbnails.length > 0 &&
+                        <img style={{ maxWidth: '75%', float: 'right' }} src={this.state.thumbnails[0]} />}
 
                     <br />
                     <br />
