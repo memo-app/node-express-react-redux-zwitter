@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import validUrl from 'valid-url';
 import config from '../../config';
 
 // UI Imports
@@ -97,16 +98,6 @@ class MemoAdd extends Component {
         });
     }
 
-    isUrl(str) {
-        var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-        return pattern.test(str);
-    }
-
     onLinkChange(event) {
         const link = event.target.value;
         this.setState({
@@ -115,7 +106,7 @@ class MemoAdd extends Component {
 
         if (link === '') {
             this.resetLink();
-        } else if (this.isUrl(link)) {
+        } else if (validUrl.isWebUri(link)) {
             this.setState({
                 loadingPreview: true
             });
