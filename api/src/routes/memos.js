@@ -62,7 +62,8 @@ memoRoutes.post('/', authMiddleware, (request, response) => {
             let memo = {
                 link: request.body.link,
                 title: request.body.title,
-                categories: request.body.categories.map(c => c.toLowerCase()),
+                categories: request.body.categories ?
+                    request.body.categories.map(c => c.toLowerCase()) : [],
                 description: request.body.description,
                 thumbnails: request.body.thumbnails,
                 userId: request.user._id,
