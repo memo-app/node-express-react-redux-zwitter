@@ -10,6 +10,7 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import LinearProgress from 'material-ui/LinearProgress';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import { blue500, red500 } from 'material-ui/styles/colors';
 import TextField from 'material-ui/TextField';
 import ChipInput from 'material-ui-chip-input';
@@ -29,6 +30,7 @@ class MemoAdd extends Component {
         this.onLinkChange = this.onLinkChange.bind(this);
         this.handleAddCategory = this.handleAddCategory.bind(this);
         this.handleDeleteCategory = this.handleDeleteCategory.bind(this);
+        this.handleClear = this.handleClear.bind(this);
 
         this.state = {
             memoId: '',
@@ -46,7 +48,9 @@ class MemoAdd extends Component {
     }
 
     componentWillMount() {
-        this.props.fetchCategories();
+        if (!this.props.categories) {
+            this.props.fetchCategories();
+        }
     }
 
     onSubmit(event) {
@@ -158,6 +162,10 @@ class MemoAdd extends Component {
         });
     }
 
+    handleClear() {
+        this.setState({ categories: [] });
+    }
+
     render() {
         return (
             <section>
@@ -215,6 +223,9 @@ class MemoAdd extends Component {
                         onRequestAdd={(category) => this.handleAddCategory(category)}
                         onRequestDelete={(category, index) => this.handleDeleteCategory(category, index)}
                     />
+
+                    {this.state.categories.length > 0 &&
+                        <FlatButton onClick={() => this.handleClear()} label="Clear categories" type="button" />}
 
                     {this.state.thumbnails && this.state.thumbnails.length > 0 &&
                         <img alt="" style={{ maxWidth: '75%', float: 'right' }} src={this.state.thumbnails[0]} />}
