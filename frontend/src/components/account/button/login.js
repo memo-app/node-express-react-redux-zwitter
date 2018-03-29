@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 class UserButtonLogin extends Component {
     render() {
         return (
-            <Link to="/user/login">
+            <Link to="/account">
                 <FlatButton {...this.props} label="Login" style={{ color: '#ffffff' }}/>
             </Link>
         );

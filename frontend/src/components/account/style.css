@@ -1,0 +1,13 @@
+.social-logins, .classical-login {
+    width: 100%;
+}
+
+@media only screen and (min-width: 1024px) {
+    .social-logins, .classical-login {
+        width: 45%;
+        float: left;
+    }
+    .social-logins > div {
+        max-width: 350px;
+    }
+}

@@ -14,8 +14,8 @@ import { List, ListItem } from 'material-ui/List';
 
 // App Imports
 import SearchBox from './search/SearchBox';
-import UserButtonLogin from './user/button/login';
-import UserButtonLogged from './user/button/logged';
+import UserButtonLogin from './account/button/login';
+import UserButtonLogged from './account/button/logged';
 import Loading from './loading';
 import { fetchCategories } from './../actions/category';
 

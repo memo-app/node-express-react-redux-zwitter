@@ -4,14 +4,15 @@ import { Route, Switch } from 'react-router-dom'
 
 // App Imports
 import Layout from './components/layout';
-import AuthRedirect from './components/user/auth-redirect';
+import AuthRedirect from './components/account/auth-redirect';
 import SearchContainer from './components/search/SearchContainer'
 import MemoListContainer from './components/memo/list-container';
 import MemoAdd from './components/memo/add';
 import MemoViewContainer from './components/memo/view-container';
 import MemoListByCategoryContainer from './components/memo/category-container';
-import UserLogin from './components/user/login';
-import UserRegister from './components/user/register';
+import Account from './components/account';
+import UserLogin from './components/account/login';
+import UserRegister from './components/account/register';
 import About from './components/about';
 import PageNotFound from './components/page-not-found';
 
@@ -25,8 +26,9 @@ const App = () => (
             <Route path="/memo/add" component={MemoAdd} />
             <Route path="/memo/:memoId" component={MemoViewContainer} />
             <Route path="/memos/category/:category" component={MemoListByCategoryContainer} />
-            <Route path="/user/login" component={UserLogin} />
-            <Route path="/user/register" component={UserRegister} />
+            <Route path="/account/login" component={UserLogin} />
+            <Route path="/account/register" component={UserRegister} />
+            <Route path="/account" component={Account} />
             <Route path="/about" component={About} />
             <Route component={PageNotFound} />
         </Switch>

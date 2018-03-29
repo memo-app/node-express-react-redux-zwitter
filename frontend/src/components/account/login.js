@@ -13,9 +13,9 @@ import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
 
 // App Imports
-import { postRegister } from '../../actions/user';
+import { postLogin } from '../../actions/user';
 
-class UserRegister extends Component {
+class UserLogin extends Component {
     constructor(props) {
         super(props);
 
@@ -26,7 +26,7 @@ class UserRegister extends Component {
             isLoading: false,
             isLoggingIn: false,
             notification: false,
-            registered: false
+            logged: false
         };
     }
 
@@ -39,23 +39,21 @@ class UserRegister extends Component {
         input.username = this.state.username;
         input.password = this.state.password;
 
-        if(input.username !=='' && input.password !=='') {
+        if (input.username !== '' && input.password !== '') {
             this.setState({ isLoggingIn: true, isLoading: true });
 
-            this.props.postRegister(input).then((response) => {
-                if(response.success) {
+            this.props.postLogin(input).then((response) => {
+                if (response.success) {
                     this.setState({
                         isLoading: false,
                         isLoggingIn: false,
                         notification: true,
-                        username: '',
-                        password: '',
                         error: ''
                     });
 
                     // Redirect
                     setTimeout(() => {
-                        this.setState({ registered: true });
+                        this.setState({ logged: true });
                     }, 1000)
                 } else {
                     this.setState({
@@ -83,60 +81,62 @@ class UserRegister extends Component {
     render() {
         return (
             <section>
-                <h2>Register</h2>
+                <h2>Login</h2>
 
-                <br/>
+                <br />
 
-                { this.state.error ? <Card><CardText color={ red500 }>{ this.state.error }</CardText></Card> : '' }
+                {this.state.error ? <Card><CardText color={red500}>{this.state.error}</CardText></Card> : ''}
 
-                { this.state.message ? <Card><CardText color={ blue500 }>{ this.state.message }</CardText></Card> : '' }
+                {this.state.message ? <Card><CardText color={blue500}>{this.state.message}</CardText></Card> : ''}
 
-                <form id="form-memo" onSubmit={ this.onSubmit.bind(this) }>
+                <form id="form-memo" onSubmit={this.onSubmit.bind(this)}>
                     <TextField
                         name="username"
-                        value={ this.state.username }
-                        onChange={ this.onChange.bind(this) }
+                        value={this.state.username}
+                        onChange={this.onChange.bind(this)}
                         floatingLabelText="Username"
-                        fullWidth={ true }
+                        fullWidth={true}
                     />
 
                     <TextField
                         type="password"
                         name="password"
-                        value={ this.state.password }
-                        onChange={ this.onChange.bind(this) }
+                        value={this.state.password}
+                        onChange={this.onChange.bind(this)}
                         floatingLabelText="Password"
-                        fullWidth={ true }
+                        fullWidth={true}
                     />
 
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
 
-                    <RaisedButton label="Submit" type="submit" backgroundColor={ blue500 } labelColor="#ffffff" />
-
-                    <Link to="/user/login"><FlatButton label="Login" /></Link>
+                    <RaisedButton label="Log in" type="submit" backgroundColor={blue500} labelColor="#ffffff" />
                 </form>
-
+                
                 <Snackbar
-                    open={ this.state.isLoggingIn }
+                    open={this.state.isLoggingIn}
                     message="Logging in..."
-                    autoHideDuration={ 1000 }
+                    autoHideDuration={1000}
                 />
 
                 <Snackbar
-                    open={ this.state.notification }
-                    message="Registered successfully."
-                    autoHideDuration={4000}
+                    open={this.state.notification}
+                    message="Login successful, redirecting..."
+                    autoHideDuration={2000}
                 />
 
-                { this.state.registered ? <Redirect to="/user/login" /> : '' }
+                {this.state.logged ? <Redirect to="/" /> : ''}
             </section>
         )
     }
 }
 
-UserRegister.propTypes = {
-    postRegister: PropTypes.func.isRequired
+UserLogin.propTypes = {
+    postLogin: PropTypes.func.isRequired
 };
 
-export default connect(null, { postRegister })(UserRegister);
+UserLogin.contextTypes = {
+    router: PropTypes.object.isRequired
+};
+
+export default connect(null, { postLogin })(UserLogin);

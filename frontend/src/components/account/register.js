@@ -13,9 +13,9 @@ import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
 
 // App Imports
-import { postLogin } from '../../actions/user';
+import { postRegister } from '../../actions/user';
 
-class UserLogin extends Component {
+class UserRegister extends Component {
     constructor(props) {
         super(props);
 
@@ -26,7 +26,7 @@ class UserLogin extends Component {
             isLoading: false,
             isLoggingIn: false,
             notification: false,
-            logged: false
+            registered: false
         };
     }
 
@@ -40,20 +40,22 @@ class UserLogin extends Component {
         input.password = this.state.password;
 
         if(input.username !=='' && input.password !=='') {
-            this.setState({ isLoggingIn: true, isLoading: true});
+            this.setState({ isLoggingIn: true, isLoading: true });
 
-            this.props.postLogin(input).then((response) => {
+            this.props.postRegister(input).then((response) => {
                 if(response.success) {
                     this.setState({
                         isLoading: false,
                         isLoggingIn: false,
                         notification: true,
+                        username: '',
+                        password: '',
                         error: ''
                     });
 
                     // Redirect
                     setTimeout(() => {
-                        this.setState({ logged: true });
+                        this.setState({ registered: true });
                     }, 1000)
                 } else {
                     this.setState({
@@ -81,7 +83,7 @@ class UserLogin extends Component {
     render() {
         return (
             <section>
-                <h2>Login</h2>
+                <h2>Register</h2>
 
                 <br/>
 
@@ -110,9 +112,7 @@ class UserLogin extends Component {
                     <br/>
                     <br/>
 
-                    <RaisedButton label="Submit" type="submit" backgroundColor={ blue500 } labelColor="#ffffff" />
-
-                    <Link to="/user/register"><FlatButton label="Register" /></Link>
+                    <RaisedButton label="Register" type="submit" backgroundColor={ blue500 } labelColor="#ffffff" />
                 </form>
 
                 <Snackbar
@@ -123,22 +123,18 @@ class UserLogin extends Component {
 
                 <Snackbar
                     open={ this.state.notification }
-                    message="Login successful, redirecting..."
-                    autoHideDuration={ 2000 }
+                    message="Registered successfully."
+                    autoHideDuration={4000}
                 />
 
-                { this.state.logged ? <Redirect to="/" /> : '' }
+                { this.state.registered ? <Redirect to="/account/login" /> : '' }
             </section>
         )
     }
 }
 
-UserLogin.propTypes = {
-    postLogin: PropTypes.func.isRequired
+UserRegister.propTypes = {
+    postRegister: PropTypes.func.isRequired
 };
 
-UserLogin.contextTypes = {
-    router: PropTypes.object.isRequired
-};
-
-export default connect(null, { postLogin })(UserLogin);
+export default connect(null, { postRegister })(UserRegister);
