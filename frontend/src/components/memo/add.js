@@ -217,7 +217,7 @@ class MemoAdd extends Component {
                     />
 
                     {this.state.thumbnails && this.state.thumbnails.length > 0 &&
-                        <img style={{ maxWidth: '75%', float: 'right' }} src={this.state.thumbnails[0]} />}
+                        <img alt="" style={{ maxWidth: '75%', float: 'right' }} src={this.state.thumbnails[0]} />}
 
                     <br />
                     <br />
