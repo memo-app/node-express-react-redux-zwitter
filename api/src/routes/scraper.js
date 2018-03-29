@@ -8,6 +8,7 @@ const MetaInspector = require('node-metainspector');
 
 // App Imports
 let authMiddleware = require('./middlewares/auth');
+let ScrapedContent = require('../models/scrapedContent');
 
 // Common error responses
 const noUrlResponse = {
@@ -56,21 +57,55 @@ const getUrlResponse = (url) => {
 
 // Scrape (GET /scraper)
 scraperRoutes.get('/fetch', authMiddleware, (request, response) => {
-    if (!validUrl.isWebUri(request.query.url)) {
+    if (!request.query.url) {
+        response.status(400).json(noUrlResponse);
+    } else if (!validUrl.isWebUri(request.query.url)) {
         response.status(400).json(invalidUrlResponse);
     } else {
-        getUrlResponse(request.query.url)
-            .then(data => {
-                response.json({ success: true, data: data, errors: [] });
-            })
-            .catch(error => {
-                response.status(400).json({
-                    success: false,
-                    errors: [{ type: 'critical', message: error }]
-                });
-            });
+        ScrapedContent.findOne({ link: request.query.url }, (error, document) => {
+            if (error || !document) {
+                getUrlResponse(request.query.url)
+                    .then(data => {
+                        response.json({ success: true, data: data, errors: [] });
+                    })
+                    .catch(error => {
+                        response.status(400).json({
+                            success: false,
+                            errors: [{
+                                type: 'critical',
+                                message: 'Could not fetch data from the URL.'
+                            }]
+                        });
+                    });
+            } else {
+                response.json({ success: true, data: document.content, errors: [] });
+            }
+        });
+
     }
 });
+
+const takeMetadata = client => {
+    let metadata = {};
+
+    if (client.title)
+        metadata.title = client.title.trim();
+    else if (client.ogTitle)
+        metadata.title = client.ogTitle.trim();
+
+    if (client.description)
+        metadata.description = client.description.trim();
+    else if (client.ogDescription)
+        metadata.description = client.ogDescription.trim();
+
+    if (client.keywords)
+        metadata.categories = client.keywords.map(kw => kw.trim())
+
+    if (client.image)
+        metadata.thumbnails = [client.image];
+
+    return metadata;
+}
 
 scraperRoutes.get('/scrape', authMiddleware, (request, response) => {
     let responseData = {
@@ -85,37 +120,41 @@ scraperRoutes.get('/scrape', authMiddleware, (request, response) => {
         response.status(400).json(invalidUrlResponse);
     } else {
         const client = new MetaInspector(request.query.url, { timeout: 5000 });
-    
-        client.on("fetch", function () {
-            let metadata = {};
-    
-            if (client.title)
-                metadata.title = client.title.trim();
-            else if (client.ogTitle)
-                metadata.title = client.ogTitle.trim();
-    
-            if (client.description)
-                metadata.description = client.description.trim();
-            else if (client.ogDescription)
-                metadata.description = client.ogDescription.trim();
-    
-            if (client.keywords)
-                metadata.categories = client.keywords.map(kw => kw.trim())
-    
-            if (client.image)
-                metadata.thumbnails = [client.image];
-    
+        const process = () => {
+            const metadata = takeMetadata(client);
+
             responseData.data = metadata;
             responseData.success = true;
             response.json(responseData);
-        });
-    
+
+            ScrapedContent.findOne({ link: request.query.url }, (error, document) => {
+                if (!document) {
+                    console.log(`Saving ${request.query.url} to ScrapedContent`);
+                    ScrapedContent.create({
+                        link: request.query.url,
+                        content: client.document
+                    });
+                }
+            });
+        }
+
+        client.on("fetch", process);
         client.on("error", function (err) {
-            responseData.errors.push({ message: 'Failed to scrape' });
+            responseData.errors.push({ message: 'Failed to scrape.' });
             response.status(400).json(responseData);
         });
-    
-        client.fetch();
+
+        ScrapedContent.findOne({ link: request.query.url }, (error, document) => {
+            if (error || !document) {
+                console.log(`Scraping ${request.query.url} ...`);
+                client.fetch();
+            } else if (document) {
+                client.document = document.content;
+                client.fetch();
+                client.document = document.content;
+            }
+        });
+
     }
 })
 
