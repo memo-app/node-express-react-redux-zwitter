@@ -3,7 +3,6 @@ import config from '../config';
 
 export const SET_MEMOS = 'SET_MEMOS';
 export const FETCH_MEMOS_BEGIN = 'FETCH_MEMOS_BEGIN';
-export const FETCH_MEMOS_BY_CATEGORY_BEGIN = 'FETCH_MEMOS_BY_CATEGORY_BEGIN';
 export const SET_MEMO = 'SET_MEMO';
 export const FETCH_MEMO_BEGIN = 'FETCH_MEMO_BEGIN';
 export const REMOVE_MEMO_BEGIN = 'REMOVE_MEMO_BEGIN';
@@ -44,7 +43,7 @@ export function fetchMemosByCategory(category) {
 
     return dispatch => {
         dispatch({
-            type: FETCH_MEMOS_BY_CATEGORY_BEGIN
+            type: FETCH_MEMOS_BEGIN
         });
 
         return fetch(`${ config.url.api }memos/category/${category}`, {
