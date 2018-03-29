@@ -13,7 +13,6 @@ import Subheader from 'material-ui/Subheader';
 import { List, ListItem } from 'material-ui/List';
 
 // App Imports
-import SearchBox from './search/SearchBox';
 import UserButtonLogin from './account/button/login';
 import UserButtonLogged from './account/button/logged';
 import Loading from './loading';
@@ -65,10 +64,7 @@ class Layout extends Component {
             <div>
                 <AppBar
                     className="app-bar"
-                    title={<div>
-                        <span style={{ marginRight: '20px' }}>MemoApp</span>
-                        <SearchBox searchTerm={this.state.searchTerm} />
-                    </div>}
+                    title="MemoApp"
                     showMenuIconButton={isAuthenticated}
                     onLeftIconButtonClick={this.handleDrawerToggle}
                     iconElementRight={isAuthenticated ? <UserButtonLogged /> : <UserButtonLogin />}

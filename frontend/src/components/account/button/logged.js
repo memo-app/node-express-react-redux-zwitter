@@ -9,9 +9,12 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import SearchIcon from 'material-ui/svg-icons/action/search';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
 
 // App Imports
 import { userLogout } from '../../../actions/user';
+import SearchBox from '../../search/SearchBox';
 
 class UserButtonLogged extends Component {
     constructor() {
@@ -31,16 +34,29 @@ class UserButtonLogged extends Component {
 
     render() {
         return (
-            <IconMenu
-                iconButtonElement={
-                    <IconButton><MoreVertIcon color="#ffffff"/></IconButton>
-                }
-                targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            >
-                <Link to="/memo/add"><MenuItem primaryText="Add memo"/></Link>
-                <MenuItem primaryText="Sign out" onClick={ this.logout.bind(this) }/>
-            </IconMenu>
+            <span>
+                <IconMenu
+                    width="500px"
+                    iconButtonElement={
+                        <IconButton><SearchIcon color="#ffffff" /></IconButton>
+                    }
+                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                >
+                    <SearchBox />
+                    <IconButton style={{ display: 'inline-flex' }}><CloseIcon color="#ff0000" /></IconButton>
+                </IconMenu>
+                <IconMenu
+                    iconButtonElement={
+                        <IconButton><MoreVertIcon color="#ffffff" /></IconButton>
+                    }
+                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                >
+                    <Link to="/memo/add"><MenuItem primaryText="Add memo" /></Link>
+                    <MenuItem primaryText="Sign out" onClick={this.logout.bind(this)} />
+                </IconMenu>
+            </span>
         );
     }
 }
