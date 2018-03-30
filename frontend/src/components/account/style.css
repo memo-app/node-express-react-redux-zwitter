@@ -7,7 +7,7 @@
         width: 45%;
         float: left;
     }
-    .social-logins > div {
+    .social-logins div {
         max-width: 350px;
     }
 }
