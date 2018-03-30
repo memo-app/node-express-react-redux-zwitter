@@ -4,6 +4,8 @@
 // Imports
 const express = require('express');
 const passport = require('passport');
+require('./../authentication/facebook');
+require('./../authentication/google');
 
 // App Imports
 const token = require('../authentication/token');
