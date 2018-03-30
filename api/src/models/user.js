@@ -18,6 +18,16 @@ let UserSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    logins: {
+        facebook: {
+            id: String,
+            token: String
+        },
+        google: {
+            id: String,
+            token: String
+        }
     }
 });
 

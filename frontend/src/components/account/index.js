@@ -16,11 +16,11 @@ class Account extends Component {
             <section>
 
                 <section className="social-logins">
-                    <h2>Social logins</h2>
+                    <h2>Social Login</h2>
                     <br/>
                     
-                    <FacebookLoginButton />
-                    <GoogleLoginButton />
+                    <a href="/api/auth/facebook"><FacebookLoginButton /></a>
+                    <a href="/api/auth/google"><GoogleLoginButton /></a>
                     <MicrosoftLoginButton />
                     <TwitterLoginButton />
                 </section>
@@ -29,9 +29,9 @@ class Account extends Component {
                     <h2>MemoApp Account</h2>
                     <br/>
 
-                    <p><Link to="/account/login">Log in using MemoApp username and password</Link></p>
+                    <p><Link to="/account/login">Login with MemoApp username and password</Link></p>
                     <br />
-                    <p><Link to="/account/register">Register on MemoApp with username and password</Link></p>
+                    <p><Link to="/account/register">Register at MemoApp with username and password</Link></p>
                 </section>
 
             </section>

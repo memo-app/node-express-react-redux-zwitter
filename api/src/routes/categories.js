@@ -8,7 +8,7 @@ const passport = require('passport');
 // App Imports
 const config = require('./../config');
 let Memo = require('../models/memo');
-require('../config/passport');
+require('../authentication/jwt');
 
 // Common Routes
 let categoryRoutes = express.Router();

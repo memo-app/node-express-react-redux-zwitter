@@ -36,7 +36,7 @@ userRoutes.post('/login', (request, response) => {
                     bcrypt.compare(request.body.password, document.password, function(hashError, hashPasswordCheck) {
                         if(!hashError) {
                             if (hashPasswordCheck) {
-                                responseData.data.token = jwt.sign(document._doc, config.secret);
+                                responseData.data.token = jwt.sign(document._doc, config.authentication.token.secret);
                                 responseData.success = true;
                             } else {
                                 responseData.errors.push({type: 'critical', message: 'The password is incorrect.'});

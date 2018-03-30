@@ -12,7 +12,7 @@ const authMiddleware = function (request, response, next) {
         request.headers['x-access-token'] || request.cookies.token;
 
     if (token && token != 'null') {
-        request.user = jwt.verify(token, config.secret);
+        request.user = jwt.verify(token, config.authentication.token.secret);
         if (request.user) {
             next();
         }

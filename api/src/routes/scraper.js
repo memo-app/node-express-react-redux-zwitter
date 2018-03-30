@@ -8,7 +8,7 @@ const validUrl = require('valid-url');
 const MetaInspector = require('node-metainspector');
 
 // App Imports
-require('../config/passport');
+require('../authentication/jwt');
 
 // Common error responses
 const noUrlResponse = {

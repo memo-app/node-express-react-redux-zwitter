@@ -10,7 +10,7 @@ const isEmpty = require('lodash/isEmpty');
 // App Imports
 const config = require('./../config');
 let Memo = require('../models/memo');
-require('../config/passport');
+require('../authentication/jwt');
 
 // Common Routes
 let memoRoutes = express.Router();

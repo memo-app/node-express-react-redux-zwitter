@@ -8,14 +8,16 @@ const cors = require('cors')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-require('./config/passport');
+require('./authentication/jwt');
+require('./authentication/facebook');
+require('./authentication/google');
 
 const config = require('./config');
 let routes = require('./routes');
 
 // Setup
 let apiServer = express();
-apiServer.set('APP_SECRET', config.secret);
+apiServer.set('APP_SECRET', config.authentication.token.secret);
 
 // MongoDB (mongoose)
 mongoose.connect(config.databaseUrl);
@@ -32,11 +34,11 @@ apiServer.use(bodyParser.json());
 // Cookie Parser
 apiServer.use(cookieParser());
 
-// Routes
-apiServer.use('/api', routes);
-
 // Passport
 apiServer.use(passport.initialize());
+
+// Routes
+apiServer.use('/api', routes);
 
 // Export
 module.exports = apiServer;
