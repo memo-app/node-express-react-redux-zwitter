@@ -98,7 +98,7 @@ memoRoutes.post('/', authMiddleware, (request, response) => {
     }
 });
 
-// Search Memos (GET /memos/search?searchTerm=123)
+// Search Memos (GET /memos/search?query=123)
 memoRoutes.get('/search', authMiddleware, (request, response) => {
     let responseData = {
         success: false,
@@ -106,12 +106,12 @@ memoRoutes.get('/search', authMiddleware, (request, response) => {
         errors: []
     };
 
-    if (request.query.searchTerm) {
+    if (request.query.query) {
 
         Memo.find({
             userId: request.user._id,
             $text: {
-                $search: request.query.searchTerm,
+                $search: request.query.query,
                 $language: "english",
                 $caseSensitive: false,
                 $diacriticSensitive: false
