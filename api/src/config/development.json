@@ -1,0 +1,11 @@
+{
+    "port": 5001,
+    "secret": "super-secret-key",
+    "databaseUrl": "mongodb://localhost/memoapp",
+    "saltRounds": 10,
+    "logins": {
+        "facebook": {
+            "id": "123"
+        }
+    }
+}
