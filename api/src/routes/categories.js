@@ -3,17 +3,21 @@
 
 // Imports
 const express = require('express');
+const passport = require('passport');
 
 // App Imports
 const config = require('./../config');
-let authMiddleware = require('./middlewares/auth');
 let Memo = require('../models/memo');
+require('../config/passport');
 
 // Common Routes
 let categoryRoutes = express.Router();
 
+// Athentication Middleware
+categoryRoutes.use(passport.authenticate('jwt', { session: false }));
+
 // Categories (GET /categories)
-categoryRoutes.get('/', authMiddleware, (request, response) => {
+categoryRoutes.get('/', (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -22,7 +26,7 @@ categoryRoutes.get('/', authMiddleware, (request, response) => {
 
     // Returns all used categories
     Memo.distinct("categories", { userId: request.user._id }).exec(function (error, documents) {
-        if(documents){
+        if (documents) {
             responseData.data = documents;
             responseData.success = true;
         }

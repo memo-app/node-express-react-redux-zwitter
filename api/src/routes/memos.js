@@ -3,37 +3,42 @@
 
 // Imports
 const express = require('express');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const isEmpty = require('lodash/isEmpty');
 
 // App Imports
 const config = require('./../config');
-let authMiddleware = require('./middlewares/auth');
 let Memo = require('../models/memo');
+require('../config/passport');
 
 // Common Routes
 let memoRoutes = express.Router();
 
+// Authentication middleware
+memoRoutes.use(passport.authenticate('jwt', { session: false }));
+
 // Memos (GET /memos)
-memoRoutes.get('/', authMiddleware, (request, response) => {
-    let responseData = {
-        success: false,
-        data: {},
-        errors: []
-    };
+memoRoutes.get('/', (request, response) => {
+        let responseData = {
+            success: false,
+            data: {},
+            errors: []
+        };
 
-    Memo.find({ userId: request.user._id })
-        .sort('-createdAt').exec(function (error, documents) {
-            if (documents.length > 0) {
-                responseData.data = documents;
-                responseData.success = true;
-            }
+        Memo.find({ userId: request.user._id })
+            .sort('-createdAt').exec(function (error, documents) {
+                if (documents.length > 0) {
+                    responseData.data = documents;
+                    responseData.success = true;
+                }
 
-            response.json(responseData);
-        });
-});
+                response.json(responseData);
+            });
+    });
 
 // Memos by category (GET /memos/category/category-name
-memoRoutes.get('/category/:category', authMiddleware, (request, response) => {
+memoRoutes.get('/category/:category', (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -50,7 +55,7 @@ memoRoutes.get('/category/:category', authMiddleware, (request, response) => {
 });
 
 // Memo Add (POST /memos/)
-memoRoutes.post('/', authMiddleware, (request, response) => {
+memoRoutes.post('/', (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -99,7 +104,7 @@ memoRoutes.post('/', authMiddleware, (request, response) => {
 });
 
 // Search Memos (GET /memos/search?query=123)
-memoRoutes.get('/search', authMiddleware, (request, response) => {
+memoRoutes.get('/search', (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -139,7 +144,7 @@ memoRoutes.get('/search', authMiddleware, (request, response) => {
 
 
 // Single Memo (GET /memos/id)
-memoRoutes.get('/:memoId', authMiddleware, (request, response) => {
+memoRoutes.get('/:memoId', (request, response) => {
     let responseData = {
         success: false,
         data: {},
@@ -161,7 +166,7 @@ memoRoutes.get('/:memoId', authMiddleware, (request, response) => {
 });
 
 // Delete Memo (DELETE /memos/id)
-memoRoutes.delete('/:memoId', authMiddleware, (request, response) => {
+memoRoutes.delete('/:memoId', (request, response) => {
     let responseData = {
         success: false,
         data: {},

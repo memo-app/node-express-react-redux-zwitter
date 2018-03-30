@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const passport = require('passport');
+require('./config/passport');
 
 const config = require('./config');
 let routes = require('./routes');
@@ -32,6 +34,9 @@ apiServer.use(cookieParser());
 
 // Routes
 apiServer.use('/api', routes);
+
+// Passport
+apiServer.use(passport.initialize());
 
 // Export
 module.exports = apiServer;

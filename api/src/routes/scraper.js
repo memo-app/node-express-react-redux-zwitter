@@ -3,11 +3,12 @@
 
 // Imports
 const express = require('express');
+const passport = require('passport');
 const validUrl = require('valid-url');
 const MetaInspector = require('node-metainspector');
 
 // App Imports
-let authMiddleware = require('./middlewares/auth');
+require('../config/passport');
 
 // Common error responses
 const noUrlResponse = {
@@ -23,6 +24,9 @@ const invalidUrlResponse = {
 
 // Common Routes
 let scraperRoutes = express.Router();
+
+// Authentication middleware
+scraperRoutes.use(passport.authenticate('jwt', { session: false }));
 
 const getUrlResponse = (url) => {
     return new Promise((resolve, reject) => {
@@ -55,7 +59,7 @@ const getUrlResponse = (url) => {
 };
 
 // Scrape (GET /scraper)
-scraperRoutes.get('/fetch', authMiddleware, (request, response) => {
+scraperRoutes.get('/fetch', (request, response) => {
     if (!validUrl.isWebUri(request.query.url)) {
         response.status(400).json(invalidUrlResponse);
     } else {
@@ -72,7 +76,7 @@ scraperRoutes.get('/fetch', authMiddleware, (request, response) => {
     }
 });
 
-scraperRoutes.get('/scrape', authMiddleware, (request, response) => {
+scraperRoutes.get('/scrape', (request, response) => {
     let responseData = {
         success: false,
         data: {},
