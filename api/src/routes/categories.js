@@ -20,10 +20,19 @@ categoryRoutes.get('/', authMiddleware, (request, response) => {
         errors: []
     };
 
-    // Returns all used categories
-    Memo.distinct("categories", { userId: request.user._id }).exec(function (error, documents) {
-        if(documents){
-            responseData.data = documents;
+    // Returns all used categories ordered by last use 
+    Memo.find({ userId: request.user._id },{categories: 1})
+        .sort({'createdAt': -1})
+        .exec(function (error, documents) {
+        if(documents){  
+            let result = [];
+            let i;
+            
+            for( i = 0; i < documents.length; i++){
+                result = result.concat(documents[i].categories);
+            }
+
+            responseData.data = [...new Set(result)];
             responseData.success = true;
         }
         response.json(responseData);
