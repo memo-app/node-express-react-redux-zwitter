@@ -99,7 +99,10 @@ class Layout extends Component {
                         </List>
                     </Drawer>}
                 <div
-                    className={classnames('app-content', { 'expanded': isAuthenticated && this.state.drawerOpen })}
+                    className={classnames('app-content', {
+                        'expanded':
+                            isAuthenticated && this.state.drawerOpen && this.openDrawerLayout()
+                    })}
                 >
                     {this.props.children}
                 </div>
