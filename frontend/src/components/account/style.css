@@ -5,9 +5,12 @@
 @media only screen and (min-width: 1024px) {
     .social-logins, .classical-login {
         width: 45%;
-        float: left;
+        float: right;
     }
-    .social-logins div {
+    .social-logins {
         max-width: 350px;
+    }
+    .social-logins a {
+        width: 250px;
     }
 }

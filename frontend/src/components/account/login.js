@@ -80,39 +80,34 @@ class UserLogin extends Component {
 
     render() {
         return (
-            <section>
-                <h2>Login</h2>
-
-                <br />
-
+            <form id="form-memo" onSubmit={this.onSubmit.bind(this)}>
                 {this.state.error ? <Card><CardText color={red500}>{this.state.error}</CardText></Card> : ''}
-
                 {this.state.message ? <Card><CardText color={blue500}>{this.state.message}</CardText></Card> : ''}
 
-                <form id="form-memo" onSubmit={this.onSubmit.bind(this)}>
-                    <TextField
-                        name="username"
-                        value={this.state.username}
-                        onChange={this.onChange.bind(this)}
-                        floatingLabelText="Username"
-                        fullWidth={true}
-                    />
+                <TextField
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.onChange.bind(this)}
+                    floatingLabelText="Username"
+                    fullWidth={true}
+                />
 
-                    <TextField
-                        type="password"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.onChange.bind(this)}
-                        floatingLabelText="Password"
-                        fullWidth={true}
-                    />
+                <TextField
+                    type="password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.onChange.bind(this)}
+                    floatingLabelText="Password"
+                    fullWidth={true}
+                />
 
-                    <br />
-                    <br />
+                <br />
+                <br />
 
-                    <RaisedButton label="Log in" type="submit" backgroundColor={blue500} labelColor="#ffffff" />
-                </form>
-                
+                <RaisedButton label="Log in" type="submit" backgroundColor={blue500} labelColor="#ffffff" />
+                <br/>
+                <p><Link to="/account/register">Register at MemoApp with username and password</Link></p>
+
                 <Snackbar
                     open={this.state.isLoggingIn}
                     message="Logging in..."
@@ -126,7 +121,7 @@ class UserLogin extends Component {
                 />
 
                 {this.state.logged ? <Redirect to="/" /> : ''}
-            </section>
+            </form>
         )
     }
 }

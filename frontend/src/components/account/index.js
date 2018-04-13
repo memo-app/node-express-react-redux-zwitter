@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { FacebookLoginButton, GoogleLoginButton, MicrosoftLoginButton, TwitterLoginButton } from 'react-social-login-buttons';
 
+// App Imports
+import Login from './login';
+
 // CSS Imports
 import './style.css';
 
@@ -15,23 +18,15 @@ class Account extends Component {
         return (
             <section>
 
+                <section className="classical-login">
+                    <Login />
+                </section>
+
                 <section className="social-logins">
-                    <h2>Social Login</h2>
-                    <br/>
-                    
                     <a href="/api/auth/facebook"><FacebookLoginButton /></a>
                     <a href="/api/auth/google"><GoogleLoginButton /></a>
                     <MicrosoftLoginButton />
                     <TwitterLoginButton />
-                </section>
-
-                <section className="classical-login">
-                    <h2>MemoApp Account</h2>
-                    <br/>
-
-                    <p><Link to="/account/login">Login with MemoApp username and password</Link></p>
-                    <br />
-                    <p><Link to="/account/register">Register at MemoApp with username and password</Link></p>
                 </section>
 
             </section>
