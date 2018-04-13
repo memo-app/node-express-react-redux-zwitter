@@ -82,10 +82,11 @@ class Layout extends Component {
                         onRequestChange={(open) => this.setState({ open })}
                         containerStyle={{ 'top': '65px' }}
                     >
-                        <SearchBox />
-
                         <MenuItem onTouchTap={this.handleDrawerToggleIfNeeded} containerElement={<Link to="/" />}>
                             Home
+                        </MenuItem>
+                        <MenuItem onTouchTap={this.handleDrawerToggleIfNeeded} containerElement={<Link to="/search" />}>
+                            Search
                         </MenuItem>
                         <MenuItem onTouchTap={this.handleDrawerToggleIfNeeded} containerElement={<Link to="/about" />}>
                             About

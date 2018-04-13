@@ -35,17 +35,9 @@ class UserButtonLogged extends Component {
     render() {
         return (
             <span>
-                <IconMenu
-                    width="500px"
-                    iconButtonElement={
-                        <IconButton><SearchIcon color="#ffffff" /></IconButton>
-                    }
-                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                >
-                    <SearchBox />
-                    <IconButton style={{ display: 'inline-flex' }}><CloseIcon color="#ff0000" /></IconButton>
-                </IconMenu>
+                <Link to="/search">
+                    <IconButton><SearchIcon color="#ffffff" /></IconButton>
+                </Link>
                 <IconMenu
                     iconButtonElement={
                         <IconButton><MoreVertIcon color="#ffffff" /></IconButton>
