@@ -16,6 +16,7 @@ import { List, ListItem } from 'material-ui/List';
 import UserButtonLogin from './account/button/login';
 import UserButtonLogged from './account/button/logged';
 import Loading from './loading';
+
 import { fetchCategories } from './../actions/category';
 
 import './style.css';
@@ -40,6 +41,10 @@ class Layout extends Component {
         } else if (window.innerWidth < 1024 && this.state.drawerOpen) {
             this.setState({ drawerOpen: false });
         }
+    }
+
+    componentWillMount() {
+        this.props.fetchCategories();
     }
 
     componentDidMount() {
@@ -77,14 +82,13 @@ class Layout extends Component {
                         onRequestChange={(open) => this.setState({ open })}
                         containerStyle={{ 'top': '65px' }}
                     >
+                        <SearchBox />
+
                         <MenuItem onTouchTap={this.handleDrawerToggleIfNeeded} containerElement={<Link to="/" />}>
-                            <span role="img" aria-label="">🏠</span> Home
-                        </MenuItem>
-                        <MenuItem onTouchTap={this.handleDrawerToggleIfNeeded} containerElement={<Link to="/search" />}>
-                            <span role="img" aria-label="">🔍</span> Search
+                            Home
                         </MenuItem>
                         <MenuItem onTouchTap={this.handleDrawerToggleIfNeeded} containerElement={<Link to="/about" />}>
-                            <span role="img" aria-label="">ℹ️</span> About
+                            About
                         </MenuItem>
 
                         <List>
